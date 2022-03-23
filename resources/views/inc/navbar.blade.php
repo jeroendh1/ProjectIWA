@@ -11,7 +11,7 @@
             </div>
                 <div class="navbar-nav">
                 @if(isset(Auth::user()->username))
-                <strong style="color: gray; padding: 0.5rem 0.git remote add origin git@github.com:jeroendh1/ProjectIWA.git1rem">Welcome {{ Auth::user()->username }}</strong>
+                <strong style="color: gray; padding: 0.5rem 0.1rem">Welcome {{ Auth::user()->username }}</strong>
                 <a class="nav-link float-end"  href="{{ url('/login/logout') }}">logout</a>
                 @endif
             </div>
