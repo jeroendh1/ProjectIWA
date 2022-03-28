@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email');
-            $table->timestamp('regDate');
-            $table->string('city');
-            $table->timestamp('last_login');
+        Schema::create('countries', function (Blueprint $table) {
+            $table->string('country_code')->primary();
+            $table->string('country');
         });
     }
 
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('countries');
     }
 };

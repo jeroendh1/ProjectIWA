@@ -5,23 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Users extends Model
+class abonnement extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
-
     protected $primaryKey = 'user_id';
-    CONST CREATED_AT = 'regDate';
-
+    public $incrementing = false;
 
     protected $attributes = [
         'user_id',
-        'first_name',
-        'last_name',
-        'email',
-        'regDate',
-        'city',
-        'last_login'
+        'abonnement_id',
+        'start_date',
+        'end_date',
+        'active',
+        'last_update'
     ];
+
 }

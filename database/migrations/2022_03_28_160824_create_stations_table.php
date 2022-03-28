@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email');
-            $table->timestamp('regDate');
-            $table->string('city');
-            $table->timestamp('last_login');
+        Schema::create('stations', function (Blueprint $table) {
+            $table->string('stn_name')->primary();
+            $table->float('longitude', 4,4);
+            $table->float('latitude', 4,4);
+            $table->float('elevation',12,12);
         });
     }
 
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('stations');
     }
 };
