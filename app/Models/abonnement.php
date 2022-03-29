@@ -9,15 +9,17 @@ class abonnement extends Model
 {
     use HasFactory;
     protected $primaryKey = 'user_id';
-    public $incrementing = false;
-
-    protected $attributes = [
-        'user_id',
-        'abonnement_id',
-        'start_date',
-        'end_date',
-        'active',
-        'last_update'
-    ];
+    public $timestamps = false;
+//    protected $attributes = [
+//        'abonnement_id',
+//        'user_id',
+//        'start_date',
+//        'end_date',
+//        'active',
+//        'last_update'
+//    ];
+    public function AbonnementType(){
+        return $this->belongsTo(abonnement_type::class);
+    }
 
 }

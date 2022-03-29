@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('abonnement_types', function (Blueprint $table) {
-            $table->id('abonnement_id');
-            $table->string('naam');
+        Schema::create('user_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('abonnement_types');
+        Schema::dropIfExists('user_type');
     }
 };

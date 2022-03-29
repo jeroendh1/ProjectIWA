@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('userdata', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email');
-            $table->timestamp('regDate');
-            $table->string('city');
-            $table->dateTime('last_login');
+        Schema::create('abonnement_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
         });
     }
 
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('userdata');
+        Schema::dropIfExists('abonnement_types');
     }
 };

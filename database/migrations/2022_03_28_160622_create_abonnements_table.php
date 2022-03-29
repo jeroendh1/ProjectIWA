@@ -14,12 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('abonnements', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->tinyInteger('abonnement_id');
+            $table->id();
+            $table->integer('user_id')->unsigned();
             $table->date('start_date');
             $table->date('end_date');
             $table->tinyInteger('active');
             $table->timestamp('last_update');
+            $table->integer('abonnement_type_id')->unsigned();
+            $table->foreign('abonnement_type_id')->references('id')->on('abonnement_types');
+            $table->foreign('user_id')->references('id')->on('users');
 
         });
     }
