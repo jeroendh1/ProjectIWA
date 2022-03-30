@@ -16,7 +16,7 @@ class LoginController extends Controller
     }
 
     function checklogin(Request $request)
-    {   error_log($request->get('username'));
+    {
         $user_data = array(
             'username'  => $request->get('username'),
             'password' => $request->get('password')

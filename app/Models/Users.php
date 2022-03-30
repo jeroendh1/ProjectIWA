@@ -12,7 +12,7 @@ class Users extends Model
 
     //CONST CREATED_AT = 'regDate';
     protected $table = 'users';
-
+    protected $primaryKey = 'user_id';
 
 //    protected $attributes = [
 //        'username',

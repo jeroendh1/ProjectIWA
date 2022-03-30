@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('abonnements', function (Blueprint $table) {
-            $table->id();
+            $table->id('abonnement_id');
             $table->integer('user_id')->unsigned();
             $table->date('start_date');
             $table->date('end_date');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamp('last_update');
             $table->integer('abonnement_type_id')->unsigned();
             $table->foreign('abonnement_type_id')->references('id')->on('abonnement_types');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('user_id')->on('users');
 
         });
     }

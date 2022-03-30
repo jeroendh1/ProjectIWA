@@ -7,7 +7,8 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="/home">Home</a>
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="/addAbonnement">abonnement</a>
+                <a class="nav-link" href="/addUser">Gebruikers</a>
             </div>
                 <div class="navbar-nav">
                 @if(isset(Auth::user()->username))

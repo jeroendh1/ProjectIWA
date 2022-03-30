@@ -18,18 +18,18 @@ class UsersTablesSeeder extends Seeder
     {
 //        Users::create([
 //
-//            'username'    => 'user1',
+//            'username'    => 'user',
 //            'password'   =>  Hash::make('hoi123'),
-//            'first_name'    => 'test',
-//            'last_name' => 'test',
-//            'email'=> 'test@t.nl',
+//            'first_name'    => 'john',
+//            'last_name' => 'doe',
+//            'email'=> 'johndoe@t.nl',
 //            'city' => 'NL',
 //            'last_login' => Carbon::now()->format('Y-m-d H:i:s'),
-//            'user_type_id' => '2',
+//            'user_type_id' => '1',
 //        ]);
         abonnement::create([
 
-            'user_id'   => 3,
+            'user_id'   => 1,
             'start_date'   =>  '2022-03-29 20:02:53',
             'end_date'    => '2023-03-29 20:02:53',
             'active' => 1,
