@@ -23,6 +23,7 @@ Route::get('/home', function () {
     return view('home');
 });
 Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->name('login-form-submit');
-Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');;
+Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');
 Route::get('login/successlogin', 'App\Http\Controllers\LoginController@successlogin');
 Route::get('login/logout', 'App\Http\Controllers\LoginController@logout');
+Route::post('/weatherData', 'App\Http\Controllers\WeatherDataController@insertData')->name('insertData');
