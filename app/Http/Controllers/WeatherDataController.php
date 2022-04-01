@@ -8,8 +8,10 @@ class WeatherDataController extends Controller
 {
     public function insertData(Request $request): string
     {
-        error_log(file_get_contents("php://input"));
+        $data = $request->getContent();
 
-        return "Success";
+        $json = json_decode($data, true);
+
+        return var_dump($json);
     }
 }
