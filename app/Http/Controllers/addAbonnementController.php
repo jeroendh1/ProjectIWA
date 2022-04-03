@@ -14,9 +14,10 @@ class addAbonnementController extends Controller
 {
     public function getAbonnementen(){
         $abonnementen = DB::table('abonnements')
-            ->join('users', 'abonnements.user_id', '=', 'users.user_id')
+            ->join('customers', 'abonnements.customer_id', '=', 'customers.customer_id')
             ->join('abonnement_types', 'abonnements.abonnement_type_id', '=', 'abonnement_types.id')
             ->get();
+
         $abonnement_types = DB::table('abonnement_types')
             ->get();
         return view('addAbonnement', ['abonnementen' => $abonnementen, 'abonnement_types' => $abonnement_types]);
@@ -24,34 +25,39 @@ class addAbonnementController extends Controller
     public function addAbonnement(Request $request){
         $abonnement = new abonnement;
 
-        if($request->has('user_id')){
-            $abonnement->user_id = $request->user_id;
+        if($request->filled('customer_id')){
+            $abonnement->customer_id = $request->customer_id;
+        }else if($request->filled('customer_email')){
+            $get_customer_id = DB::table('customers')->where('email', $request->customer_email)->first();
+            if(!$get_customer_id){return $this->errormsg(); }
+            $abonnement->customer_id = $get_customer_id->customer_id;
         }else{
-            $get_user_id = DB::table('users')->where('email', $request->useremail)->first();
-            $abonnement->user_id = $get_user_id->user_id;
+            return $this->errormsg();
         }
 
         $abonnement->start_date = $request->start_date;
         $abonnement->end_date = $request->end_date;
-        $abonnement->active = 1;
-        $abonnement->abonnement_type_id = $request->abonnement_type_id;
+        $abonnement->abonnement_type_id = $request->abonnement_type;
         $abonnement->save();
-        return redirect('addAbonnemet')->with('status', 'record succesfull inserted');
+        return redirect('addAbonnement')->with('success', 'record succesfull inserted');
 
     }
     public function editAbonnement(Request $request, $abonnement_id){
         $abonnement = abonnement::find($abonnement_id);
+        error_log($abonnement);
         $abonnement->start_date = $request->start_date;
         $abonnement->end_date = $request->end_date;
-        $abonnement->active = 1;
-        $abonnement->abonnement_type_id = $request->abonnement_type_id;
+        $abonnement->abonnement_type_id = $request->abonnement_type;
         $abonnement->save();
-        return redirect('addAbonnemet')->with('status', 'record succesfull updated');
+        return redirect('addAbonnement')->with('success', 'record succesfull updated');
 
     }
     public function deleteAbonnement(Request $request, $abonnement_id){
         $abonnement = abonnement::find($abonnement_id);
         $abonnement->delete();
-        return redirect('addAbonnemet')->with('status', 'record succesfull deleted');
+        return redirect('addAbonnement')->with('success', 'record succesfull deleted');
+    }
+    public function errormsg(){
+        return back()->with('error', 'Klant niet gevonden');
     }
 }

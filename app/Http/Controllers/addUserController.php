@@ -12,13 +12,11 @@ class addUserController extends Controller
 {
     public function getusers(){
         $users = DB::table('users')
-            ->join('user_types', 'users.user_type_id', '=', 'user_types.id')
             ->get();
-        $user_types = DB::table('user_types')
-            ->get();
-        return view('addUser', ['users' => $users, 'user_types' => $user_types]);
+        return view('addUser', ['users' => $users]);
     }
     public function addUser(Request $request){
+        error_log($request);
         $user = new User;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
@@ -27,7 +25,7 @@ class addUserController extends Controller
         $user->last_name = $request->last_name;
         $user->city = $request->city;
         $user->last_login = Carbon::now()->format('Y-m-d H:i:s') ;
-        $user->user_type_id = $request->user_type;
+        $user->admin = $request->admin == 'on' ? 1 : 0;
         $user->save();
         return redirect('addUser')->with('status', 'record succesfull inserted');
 
@@ -39,7 +37,6 @@ class addUserController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->city = $request->city;
-        $user->user_type_id = $request->user_type;
         $user->save();
         return redirect('addUser')->with('status', 'record succesfull updated');
 

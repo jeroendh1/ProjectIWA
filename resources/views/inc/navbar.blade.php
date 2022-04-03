@@ -8,7 +8,9 @@
             <div class="navbar-nav">
                 <a class="nav-link" href="/home">Home</a>
                 <a class="nav-link" href="/addAbonnement">abonnement</a>
+                @if(isset(Auth::user()->admin)  and Auth::user()->admin == 1)
                 <a class="nav-link" href="/addUser">Gebruikers</a>
+                @endif
             </div>
                 <div class="navbar-nav">
                 @if(isset(Auth::user()->username))

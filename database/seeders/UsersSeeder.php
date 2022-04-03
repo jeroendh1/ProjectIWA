@@ -3,11 +3,14 @@
 namespace Database\Seeders;
 
 use App\Models\abonnement;
+use App\Models\customer;
 use App\Models\Users;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
-class UsersTablesSeeder extends Seeder
+use Illuminate\Support\Str;
+
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +19,7 @@ class UsersTablesSeeder extends Seeder
      */
     public function run()
     {
+
 //        Users::create([
 //
 //            'username'    => 'user',
@@ -25,14 +29,13 @@ class UsersTablesSeeder extends Seeder
 //            'email'=> 'johndoe@t.nl',
 //            'city' => 'NL',
 //            'last_login' => Carbon::now()->format('Y-m-d H:i:s'),
-//            'user_type_id' => '1',
+//            'admin' => '1',
 //        ]);
+//
         abonnement::create([
 
-            'user_id'   => 1,
+            'customer_id'   => 1,
             'start_date'   =>  '2022-03-29 20:02:53',
-            'end_date'    => '2023-03-29 20:02:53',
-            'active' => 1,
             'last_update'=> Carbon::now()->format('Y-m-d H:i:s'),
             'abonnement_type_id' => 1,
         ]);

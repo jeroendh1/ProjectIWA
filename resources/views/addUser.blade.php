@@ -60,13 +60,11 @@
                                                    id="city" required>
                                         </div>
                                         <div class="mb-3 col-sm-4">
-                                            <label class="form-label">Type</label>
-                                            <select name="user_type" id="user_type" class="form-select" aria-label=".form-select-sm">
-                                                <option selected>Kies gebruiker type</option>
-                                                @foreach($user_types as $user_type)
-                                                <option value="{{$user_type->id}}">{{$user_type->type}}</option>
-                                                @endforeach
-                                            </select>
+                                                <input class="form-check-input" name="admin" type="checkbox" id="admin">
+                                                <label class="form-check-label" for="admin">
+                                                    Admin
+                                                </label>
+                                            </div>
                                         </div>
                                         <div class="mb-3 offset-4 col-sm-4">
                                             <input type="submit" value="Gebruiker toevoegen" name="create_user"
@@ -143,13 +141,8 @@
                                                    id="city" value="{{$user->city}}" required>
                                         </div>
                                         <div class="mb-3 col-sm-4">
-                                            <label class="form-label">Type</label>
-                                            <select name="user_type" id="user_type" class="form-select" aria-label=".form-select-sm">
-                                                <option value="{{$user->id}}" selected>{{$user->type}}</option>
-                                                @foreach($user_types as $user_type)
-                                                    <option value="{{$user_type->id}}">{{$user_type->type}}</option>
-                                                @endforeach
-                                            </select>
+                                            <label class="form-label">admin</label>
+
                                         </div>
                                         <div class="mb-3 offset-4 col-sm-4">
                                             <input type="submit" value="Bijwerken" name="edit_user"

@@ -29,10 +29,10 @@ Route::post('/addAbonnement/{abonnement_id}/submit', 'App\Http\Controllers\addAb
 Route::get('/addAbonnement/{abonnement_id}/submit', 'App\Http\Controllers\addAbonnementController@deleteAbonnement')->name('deleteAbonnement');
 
 //route voor add//edit/delete user page
-Route::get('/addUser',  'App\Http\Controllers\addUserController@getUsers')->name('get-users');
-Route::post('/addUser/submit', 'App\Http\Controllers\addUserController@addUser')->name('addUser-form-submit');
-Route::post('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@editUser')->name('editUser-form-submit');
-Route::get('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@deleteUser')->name('deleteUser');
+Route::get('/addUser',  'App\Http\Controllers\addUserController@getUsers')->name('get-users')->middleware('admin');
+Route::post('/addUser/submit', 'App\Http\Controllers\addUserController@addUser')->name('addUser-form-submit')->middleware('admin');
+Route::post('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@editUser')->name('editUser-form-submit')->middleware('admin');
+Route::get('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@deleteUser')->name('deleteUser')->middleware('admin');
 
 Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->name('login-form-submit');
 Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');;

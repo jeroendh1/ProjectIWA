@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class abonnement extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'abonnement_id';
     public $timestamps = false;
 //    protected $attributes = [
 //        'abonnement_id',

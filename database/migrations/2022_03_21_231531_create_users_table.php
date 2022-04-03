@@ -23,8 +23,9 @@ return new class extends Migration
             $table->timestamp('regDate');
             $table->string('city');
             $table->dateTime('last_login');
-            $table->integer('user_type_id')->unsigned();
-            $table->foreign('user_type_id')->references('id')->on('user_types');
+            $table->boolean('admin');
+//            $table->integer('user_type_id')->unsigned();
+//            $table->foreign('user_type_id')->references('id')->on('user_types');
 
         });
     }

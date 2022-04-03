@@ -25,8 +25,8 @@ class Users extends Model
 //        'city',
 //        'last_login'
 //    ];
-
-    public function userType(){
-        return $this->belongsTo(user_type::class);
-    }
+//
+//    public function userType(){
+//        return $this->belongsTo(user_type::class);
+//    }
 }

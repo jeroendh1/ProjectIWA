@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class user_type extends Model
+class customer extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'customer_id';
 
-//    public function users(){
-//        return $this->hasMany(Users::class);
-//    }
 }
