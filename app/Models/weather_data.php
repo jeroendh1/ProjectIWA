@@ -9,26 +9,25 @@ class weather_data extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'stn_name';
-    protected $keyType = 'string';
-    public $incrementing = false;
+    protected $primaryKey = 'data_id';
     public $timestamps = false;
     protected $table = 'weather_data';
 
     protected $attributes = [
-        'stn_name',
+        'data_id',
+        'station_id',
         'date',
         'time',
-        'temp',
-        'dewp',
-        'stp',
-        'slp',
-        'visib',
-        'wdsp',
-        'prcp',
-        'sndp',
-        'frshtt',
-        'cldc',
-        'winddir'
+        'temperatuur',
+        'dauwpunt_temperatuur',
+        'station_luchtdruk',
+        'zeeniveau_luchtdruk',
+        'zicht',
+        'windsnelheid',
+        'neerslag',
+        'sneeuwdiepte',
+        'vorst_regen_sneeuw_hagel_onweer_tornado',
+        'bewolking',
+        'windrichting'
     ];
 }

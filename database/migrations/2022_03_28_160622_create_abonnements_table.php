@@ -14,12 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('abonnements', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->tinyInteger('abonnement_id');
+            $table->integer('user_id')->primary();
+            $table->integer('abonnement_id')->unsigned();
             $table->date('start_date');
             $table->date('end_date');
             $table->tinyInteger('active');
             $table->timestamp('last_update');
+            $table->string('api_key');
+            $table->foreign('abonnement_id')->references('abonnement_id')->on('abonnement_types');
 
         });
     }
@@ -31,6 +33,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('abonnements');
     }
 };

@@ -14,13 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('userdata', function (Blueprint $table) {
-            $table->id('user_id');
+            $table->increments('user_id');
+            $table->integer('type_id')->unsigned();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
             $table->timestamp('regDate');
             $table->string('city');
             $table->dateTime('last_login');
+            $table->foreign('type_id')->references('type_id')->on('user_types');
         });
     }
 
@@ -31,6 +33,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('userdata');
     }
 };

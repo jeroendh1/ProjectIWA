@@ -16,8 +16,8 @@ class country extends Model
     protected $table = 'countries';
 
     // primary key
-    protected $primaryKey = 'country_code';
-    protected $keyType = 'string';
+    protected $primaryKey = 'country_id';
+    
     
     // model ID is not auto-incrementing.
     public $incrementing = false;
@@ -30,6 +30,7 @@ class country extends Model
      * 
      */
     protected $attributes = [
+        'country_id',
         'country_code',
         'country'
     ];

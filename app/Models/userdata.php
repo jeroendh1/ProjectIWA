@@ -18,6 +18,7 @@ class Users extends Model
 
     protected $attributes = [
         'user_id',
+        'type_id',
         'first_name',
         'last_name',
         'email',

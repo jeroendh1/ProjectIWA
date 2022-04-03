@@ -13,8 +13,8 @@ class geolocation extends Model
     
 protected $attributes = [
         'id',
-        'station_name',
-        'country_code',
+        'station_id',
+        'country_id',
         'island',
         'county',
         'place',

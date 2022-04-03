@@ -5,20 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class nearestlocation extends Model
+class gecorrigeerde_data extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
+    public $incrementing = false;
+    public $table = 'gecorrigeerde_data';
 
     protected $attributes = [
-        'id',
-        'station_id',
-        'name',
-        'administrative_region1',
-        'administrative_region2',
-        'country_code',
-        'longitude',
-        'latitude'
+        'originele_data_id',
+        'gecorrigeerde_data_id'
     ];
+
 }

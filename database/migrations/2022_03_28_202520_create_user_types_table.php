@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
-            $table->increments('country_id');
-            $table->string('country_code');
-            $table->string('country');
+        Schema::create('user_types', function (Blueprint $table) {
+            $table->increments('type_id');
+            $table->string('naam');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('countries');
+        Schema::dropIfExists('user_types');
     }
 };

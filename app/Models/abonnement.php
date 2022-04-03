@@ -10,6 +10,7 @@ class abonnement extends Model
     use HasFactory;
     protected $primaryKey = 'user_id';
     public $incrementing = false;
+    public $timestamps = false;
 
     protected $attributes = [
         'user_id',
@@ -17,7 +18,9 @@ class abonnement extends Model
         'start_date',
         'end_date',
         'active',
-        'last_update'
+        'last_update',
+        'api_key'
+
     ];
 
 }

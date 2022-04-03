@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('username')->unique();
-            $table->string('password');
+        Schema::create('abonnement_types', function (Blueprint $table) {
+            $table->increments('abonnement_id');
+            $table->string('naam');
         });
     }
 
@@ -27,6 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('abonnement_types');
     }
 };

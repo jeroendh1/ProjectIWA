@@ -10,6 +10,7 @@ class abonnement_type extends Model
     use HasFactory;
 
     protected $primaryKey = 'abonnement_id';
+    public $timestamps = false;
     /*
     * 
     * Table Attributes

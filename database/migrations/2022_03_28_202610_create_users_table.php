@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('abonnement_types', function (Blueprint $table) {
-            $table->id('abonnement_id');
-            $table->string('naam');
+        Schema::create('user_logins', function (Blueprint $table) {
+            $table->integer('id')->unsigned();
+            $table->string('username')->unique();
+            $table->string('password');
+            $table->foreign('id')->references('user_id')->on('userdata');
+
         });
     }
 
@@ -26,6 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('abonnement_types');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('user_logins');
     }
 };

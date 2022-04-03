@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('stations', function (Blueprint $table) {
-            $table->string('stn_name')->primary();
+            $table->integer('station_id')->primary();
             $table->float('longitude', 4,4);
             $table->float('latitude', 4,4);
             $table->float('elevation',12,12);
@@ -28,6 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('stations');
     }
 };
