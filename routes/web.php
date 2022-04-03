@@ -28,5 +28,3 @@ Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->
 Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');
 Route::get('login/successlogin', 'App\Http\Controllers\LoginController@successlogin');
 Route::get('login/logout', 'App\Http\Controllers\LoginController@logout');
-
-Route::post('/weatherData', 'App\Http\Controllers\WeatherDataController@insertData')->name('weatherData');

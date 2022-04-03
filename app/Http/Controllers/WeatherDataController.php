@@ -8,10 +8,18 @@ class WeatherDataController extends Controller
 {
     public function insertData(Request $request): string
     {
-        $data = $request->getContent();
+        $content = $request->getContent();
+        $json = json_decode($content, true);
+        $collection = $json['WEATHERDATA'];
 
-        $json = json_decode($data, true);
+        foreach ($collection as $station_key => $document)
+        {
+            foreach ($document as $field_key => $field)
+            {
 
-        return var_dump($json);
+            }
+        }
+
+        return "REQUEST SUCCESSFUL";
     }
 }
