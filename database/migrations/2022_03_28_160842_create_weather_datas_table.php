@@ -13,21 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('weather_data', function (Blueprint $table) {
-            $table->string('stn_name');
-            $table->date('date');
-            $table->time('time');
-            $table->float('temp', 2,1);
-            $table->float('dewp', 1,1);
-            $table->float('stp', 3,1);
-            $table->float('slp', 4,1);
-            $table->float('visib', 2,1);
-            $table->float('wdsp', 2,1);
-            $table->float('prcp', 2,2);
-            $table->float('sndp', 1,1);
-            $table->string('frshtt');
-            $table->float('cldc', 2,1);
-            $table->tinyInteger('wnddir');
+        Schema::create('weatherData', function (Blueprint $table) {
+            $table->id("data_id");
+            $table->string('STN')->index();
+            $table->date('DATE');
+            $table->time('TIME');
+            $table->float('TEMP', 2,1);
+            $table->float('DEWP', 1,1);
+            $table->float('STP', 3,1);
+            $table->float('SLP', 4,1);
+            $table->float('VISIB', 2,1);
+            $table->float('WDSP', 2,1);
+            $table->float('PRCP', 2,2);
+            $table->float('SNDP', 1,1);
+            $table->string('FRSHTT');
+            $table->float('CLDC', 2,1);
+            $table->tinyInteger('WNDDIR');
         });
     }
 
@@ -38,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weather_datas');
+        Schema::dropIfExists('weatherData');
     }
 };

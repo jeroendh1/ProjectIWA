@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\WeatherDataController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -35,6 +37,6 @@ Route::post('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController
 Route::get('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@deleteUser')->name('deleteUser')->middleware('admin');
 
 Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->name('login-form-submit');
-Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');;
+Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');
 Route::get('login/successlogin', 'App\Http\Controllers\LoginController@successlogin');
 Route::get('login/logout', 'App\Http\Controllers\LoginController@logout');
