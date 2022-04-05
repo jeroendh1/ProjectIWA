@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WeatherData;
 use Symfony\Component\HttpFoundation\Request;
 
 class WeatherDataController extends Controller
@@ -14,10 +15,7 @@ class WeatherDataController extends Controller
 
         foreach ($collection as $station_key => $document)
         {
-            foreach ($document as $field_key => $field)
-            {
-
-            }
+            WeatherData::create($document);
         }
 
         return "REQUEST SUCCESSFUL";
