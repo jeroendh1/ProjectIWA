@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('vorst_regen_sneeuw_hagel_onweer_tornado')->nullable();
             $table->float('bewolking', 2,1)->nullable();
             $table->tinyInteger('windrichting')->nullable();
-            $table->tinyInteger('gecorrigeerde_data');
+            $table->Integer('gecorrigeerde_data_id');
             $table->foreign('station_id')->references('station_id')->on('stations');
         });
     }
