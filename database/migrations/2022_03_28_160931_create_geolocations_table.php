@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('geolocations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('station_id');
+            $table->string('station_id');
             $table->integer('country_id')->unsigned();
             $table->string('island')->nullable();
             $table->string('county')->nullable();

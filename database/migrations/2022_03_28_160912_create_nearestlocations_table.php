@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('nearestlocations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('station_id');
+            $table->string('station_id');
             $table->string('name')->nullable();
             $table->string('administrative_region1')->nullable();
             $table->string('administrative_region2')->nullable();
