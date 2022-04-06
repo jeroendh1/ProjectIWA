@@ -14,14 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('nearestlocations', function (Blueprint $table) {
-            $table->id();
-            $table->string('station_name');
-            $table->string('name');
-            $table->string('administrative_region1');
-            $table->string('administrative_region2');
-            $table->string('country_code');
+            $table->increments('id');
+            $table->string('station_id');
+            $table->string('name')->nullable();
+            $table->string('administrative_region1')->nullable();
+            $table->string('administrative_region2')->nullable();
+            $table->integer('country_id');
             $table->float('longitude', 4,4);
             $table->float('latitude', 4,4);
+            $table->foreign('station_id')->references('station_id')->on('stations');
         });
     }
 
@@ -32,6 +33,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('nearestlocations');
     }
 };

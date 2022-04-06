@@ -11,10 +11,12 @@ class user_login extends Model
 
     public $timestamps = false;
 
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
     public $incrementing = false;
+    
 
     protected $attributes = [
+        'id',
         'username',
         'password'
     ];

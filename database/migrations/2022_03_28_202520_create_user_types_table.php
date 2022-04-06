@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('abonnement_types', function (Blueprint $table) {
-<<<<<<< HEAD:database/migrations/2022_03_26_160632_create_abonnement_types_table.php
-            $table->increments('id');
-            $table->string('omschrijving');
-=======
-            $table->increments('abonnement_id');
+        Schema::create('user_types', function (Blueprint $table) {
+            $table->increments('type_id');
             $table->string('naam');
->>>>>>> db:database/migrations/2022_03_28_160612_create_abonnement_types_table.php
         });
     }
 
@@ -32,6 +27,6 @@ return new class extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('abonnement_types');
+        Schema::dropIfExists('user_types');
     }
 };
