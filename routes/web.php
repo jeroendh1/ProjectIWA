@@ -19,9 +19,30 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
+<<<<<<< Updated upstream
 Route::get('/home', function () {
     return view('home');
 });
+=======
+//Route::get('/home', function () {
+//    return view('home');
+//});
+
+Route::get('/home',  'App\Http\Controllers\DashboardController@getCountries');
+Route::get('/',  'App\Http\Controllers\DashboardController@getCountries');
+
+Route::get('/addAbonnement',  'App\Http\Controllers\addAbonnementController@getAbonnementen')->name('get-abonnementen');
+Route::post('/addAbonnement/submit', 'App\Http\Controllers\addAbonnementController@addAbonnement')->name('addAbonnement-form-submit');
+Route::post('/addAbonnement/{abonnement_id}/submit', 'App\Http\Controllers\addAbonnementController@editAbonnement')->name('editAbonnement-form-submit');
+Route::get('/addAbonnement/{abonnement_id}/submit', 'App\Http\Controllers\addAbonnementController@deleteAbonnement')->name('deleteAbonnement');
+
+//route voor add//edit/delete user page
+Route::get('/addUser',  'App\Http\Controllers\addUserController@getUsers')->name('get-users');
+Route::post('/addUser/submit', 'App\Http\Controllers\addUserController@addUser')->name('addUser-form-submit');
+Route::post('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@editUser')->name('editUser-form-submit');
+Route::get('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@deleteUser')->name('deleteUser');
+
+>>>>>>> Stashed changes
 Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->name('login-form-submit');
 Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');;
 Route::get('login/successlogin', 'App\Http\Controllers\LoginController@successlogin');
