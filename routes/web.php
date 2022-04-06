@@ -19,11 +19,11 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
-<<<<<<< Updated upstream
+
 Route::get('/home', function () {
     return view('home');
 });
-=======
+
 //Route::get('/home', function () {
 //    return view('home');
 //});
@@ -42,7 +42,6 @@ Route::post('/addUser/submit', 'App\Http\Controllers\addUserController@addUser')
 Route::post('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@editUser')->name('editUser-form-submit');
 Route::get('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@deleteUser')->name('deleteUser');
 
->>>>>>> Stashed changes
 Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->name('login-form-submit');
 Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');;
 Route::get('login/successlogin', 'App\Http\Controllers\LoginController@successlogin');
