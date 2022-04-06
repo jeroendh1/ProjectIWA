@@ -13,22 +13,24 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('weatherData', function (Blueprint $table) {
-            $table->id("data_id");
-            $table->string('STN')->index();
-            $table->date('DATE');
-            $table->time('TIME');
-            $table->float('TEMP', 2,1);
-            $table->float('DEWP', 1,1);
-            $table->float('STP', 3,1);
-            $table->float('SLP', 4,1);
-            $table->float('VISIB', 2,1);
-            $table->float('WDSP', 2,1);
-            $table->float('PRCP', 2,2);
-            $table->float('SNDP', 1,1);
-            $table->string('FRSHTT');
-            $table->float('CLDC', 2,1);
-            $table->tinyInteger('WNDDIR');
+        Schema::create('weatherdata', function (Blueprint $table) {
+            $table->increments('data_id');
+            $table->string('STN')->nullable();
+            $table->date('DATE')->nullable();
+            $table->time('TIME')->nullable();
+            $table->float('TEMP')->nullable();
+            $table->float('DEWP')->nullable();
+            $table->float('STP')->nullable();
+            $table->float('SLP')->nullable();
+            $table->float('VISIB')->nullable();
+            $table->float('WDSP')->nullable();
+            $table->float('PRCP')->nullable();
+            $table->float('SNDP')->nullable();
+            $table->string('FRSHTT')->nullable();
+            $table->float('CLDC')->nullable();
+            $table->Integer('WNDDIR')->nullable();
+            $table->Integer('gecorrigeerde_data_id')->nullable();
+//            $table->foreign('STN')->references('station_id')->on('stations');
         });
     }
 
@@ -39,6 +41,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weatherData');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('weather_data');
     }
 };

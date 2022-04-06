@@ -8,26 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WeatherData extends Model
 {
     use HasFactory;
-
-    public $incrementing = false;
+    protected $primaryKey = 'data_id';
     public $timestamps = false;
-    protected $table = 'weatherData';
-    protected $fillable = true;
-
-    protected $attributes = [
-        'STN',
-        'DATE',
-        'TIME',
-        'TEMP',
-        'DEWP',
-        'STP',
-        'SLP',
-        'VISIB',
-        'WDSP',
-        'PRCP',
-        'SNDP',
-        'FRSHTT',
-        'CLDC',
-        'WNDDIR'
-    ];
+    protected $table = 'weatherdata';
 }

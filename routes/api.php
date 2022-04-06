@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/weatherData', 'App\Http\Controllers\WeatherDataController@insertData')->name('weatherData');
+Route::apiResource('/weatherData', App\Http\Controllers\API\WeatherDataController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
