@@ -28,8 +28,10 @@ Route::get('/home', function () {
 //    return view('home');
 //});
 
-Route::get('/home',  'App\Http\Controllers\DashboardController@getCountries');
-Route::get('/',  'App\Http\Controllers\DashboardController@getCountries');
+Route::get('/home',  'App\Http\Controllers\DashboardController@getMalfunctions');
+Route::get('/',  'App\Http\Controllers\DashboardController@getMalfunctions');
+//Route::get('/home/',  'App\Http\Controllers\DashboardController@getCountries');
+//Route::get('/',  'App\Http\Controllers\DashboardController@getCountries');
 
 Route::get('/addAbonnement',  'App\Http\Controllers\addAbonnementController@getAbonnementen')->name('get-abonnementen');
 Route::post('/addAbonnement/submit', 'App\Http\Controllers\addAbonnementController@addAbonnement')->name('addAbonnement-form-submit');
