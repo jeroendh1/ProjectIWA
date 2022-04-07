@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function getMalfunctions() {
         $tableMalfunctions = DB::select('select station_id, longitude, c.country from stations
-            join geolocations gs on stations.station_id=gs.station_name
+            join geolocation gs on stations.station_id=gs.station_name
             join countries c on gs.country_code = c.country_code order by longitude desc');
 
         return view('home', ['malfunctions' => $tableMalfunctions]);
