@@ -7,12 +7,10 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="/home">Home</a>
-<<<<<<< Updated upstream
-                <a class="nav-link" href="#">Features</a>
-=======
-                <a class="nav-link" href="/addAbonnement">Abonnement</a>
+                <a class="nav-link" href="/addAbonnement">abonnement</a>
+                @if(isset(Auth::user()->admin)  and Auth::user()->admin == 1)
                 <a class="nav-link" href="/addUser">Gebruikers</a>
->>>>>>> Stashed changes
+                @endif
             </div>
                 <div class="navbar-nav">
                 @if(isset(Auth::user()->username))

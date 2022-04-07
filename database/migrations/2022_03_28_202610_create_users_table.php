@@ -24,9 +24,6 @@ return new class extends Migration
             $table->string('city');
             $table->dateTime('last_login');
             $table->boolean('admin');
-//            $table->integer('user_type_id')->unsigned();
-//            $table->foreign('user_type_id')->references('id')->on('user_types');
-
         });
     }
 
@@ -37,6 +34,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('users');
     }
 };

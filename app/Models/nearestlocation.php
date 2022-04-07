@@ -13,7 +13,7 @@ class nearestlocation extends Model
 
     protected $attributes = [
         'id',
-        'station_name',
+        'station_id',
         'name',
         'administrative_region1',
         'administrative_region2',

@@ -19,14 +19,20 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
-
 Route::get('/home', function () {
     return view('home');
 });
+Route::get('/addAbonnement',  'App\Http\Controllers\addAbonnementController@getAbonnementen')->name('get-abonnementen');
+Route::post('/addAbonnement/submit', 'App\Http\Controllers\addAbonnementController@addAbonnement')->name('addAbonnement-form-submit');
+Route::post('/addAbonnement/{abonnement_id}/submit', 'App\Http\Controllers\addAbonnementController@editAbonnement')->name('editAbonnement-form-submit');
+Route::get('/addAbonnement/{abonnement_id}/submit', 'App\Http\Controllers\addAbonnementController@deleteAbonnement')->name('deleteAbonnement');
 
-//Route::get('/home', function () {
-//    return view('home');
-//});
+//route voor add//edit/delete user page
+Route::get('/addUser',  'App\Http\Controllers\addUserController@getUsers')->name('get-users')->middleware('admin');
+Route::post('/addUser/submit', 'App\Http\Controllers\addUserController@addUser')->name('addUser-form-submit')->middleware('admin');
+Route::post('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@editUser')->name('editUser-form-submit')->middleware('admin');
+Route::get('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@deleteUser')->name('deleteUser')->middleware('admin');
+
 
 Route::get('/home',  'App\Http\Controllers\DashboardController@getMalfunctions');
 Route::get('/',  'App\Http\Controllers\DashboardController@getMalfunctions');
@@ -45,6 +51,6 @@ Route::post('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController
 Route::get('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@deleteUser')->name('deleteUser');
 
 Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->name('login-form-submit');
-Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');;
+Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');
 Route::get('login/successlogin', 'App\Http\Controllers\LoginController@successlogin');
 Route::get('login/logout', 'App\Http\Controllers\LoginController@logout');

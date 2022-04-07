@@ -11,12 +11,11 @@ class station extends Model
 
     public $timestamps = false;
 
-    protected $primaryKey = 'stn_name';
-    protected $keyType = 'string';
+    protected $primaryKey = 'station_id';
     public $incrementing = false;
 
     protected $attributes = [
-        'stn_name',
+        'station_id',
         'longitude',
         'latitude',
         'elevation'

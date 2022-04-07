@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->string('country_code')->primary();
+            $table->increments('country_id');
+            $table->string('country_code');
             $table->string('country');
         });
     }
@@ -26,6 +27,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('countries');
     }
 };
