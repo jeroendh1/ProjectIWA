@@ -14,11 +14,4 @@ class station extends Model
     protected $primaryKey = 'station_id';
     public $incrementing = false;
 
-    protected $attributes = [
-        'station_id',
-        'longitude',
-        'latitude',
-        'elevation'
-    ];
-
 }
