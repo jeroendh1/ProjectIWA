@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('administrative_region1')->nullable();
             $table->string('administrative_region2')->nullable();
             $table->integer('country_id');
-            $table->float('longitude', 4,4);
-            $table->float('latitude', 4,4);
+            $table->float('longitude', 8,5);
+            $table->float('latitude', 8,5);
             $table->foreign('station_id')->references('station_id')->on('stations');
         });
     }
