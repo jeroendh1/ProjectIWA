@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Hash;
 class DashboardController extends Controller
 {
     public function getMalfunctions() {
-        $tableMalfunctions = DB::select('select station_id, longitude, c.country from stations
-            join geolocations gs on stations.station_id=gs.station_name
+        $tableMalfunctions = DB::select('select s.station_id, s.longitude, c.country from stations s
+            join geolocations gs on s.station_id = gs.station_id
             join countries c on gs.country_code = c.country_code order by longitude desc');
 
         return view('home', ['malfunctions' => $tableMalfunctions]);
