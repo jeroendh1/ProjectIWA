@@ -10,14 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
-    public function getMalfunctions($country = null) {
-        if ($country == null) {
-            $tableMalfunctions = DB::select('select stn_name, longitude from stations order by longitude desc');
-        } else {
-            $tableMalfunctions = DB::select('select stn_name, longitude from stations
-                join geolocations gs on stations.stn_name=gs.station_name
-                join countries c on gs.country_code = c.country_code where country = ". $country ." order by longitude desc');
-        }
+    public function getMalfunctions() {
+        $tableMalfunctions = DB::select('select stn_name, longitude, c.country from stations
+            join geolocations gs on stations.stn_name=gs.station_name
+            join countries c on gs.country_code = c.country_code order by longitude desc');
+
         return view('home', ['malfunctions' => $tableMalfunctions]);
     }
 
