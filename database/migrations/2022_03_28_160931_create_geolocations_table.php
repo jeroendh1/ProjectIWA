@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('geolocations', function (Blueprint $table) {
+        Schema::create('geolocation', function (Blueprint $table) {
             $table->increments('id');
             $table->string('station_id');
             $table->integer('country_id')->unsigned();

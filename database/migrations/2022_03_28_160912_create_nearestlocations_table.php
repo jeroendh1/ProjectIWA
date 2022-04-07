@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('nearestlocations', function (Blueprint $table) {
+        Schema::create('nearestlocation', function (Blueprint $table) {
             $table->increments('id');
             $table->string('station_id');
             $table->string('name')->nullable();
