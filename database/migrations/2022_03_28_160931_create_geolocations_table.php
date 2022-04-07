@@ -46,6 +46,6 @@ return new class extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('geolocations');
+        Schema::dropIfExists('geolocation');
     }
 };
