@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('administrative_region1')->nullable();
             $table->string('administrative_region2')->nullable();
-            $table->string('country_id');
+            $table->string('country_code');
             $table->float('longitude');
             $table->float('latitude');
             $table->foreign('station_id')->references('station_id')->on('stations');
