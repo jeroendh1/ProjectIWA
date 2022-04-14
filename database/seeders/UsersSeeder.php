@@ -27,7 +27,7 @@ class UsersSeeder extends Seeder
             'first_name'    => 'john',
             'last_name' => 'doe',
             'email'=> 'johndoe@t.nl',
-            'city' => 'NL',
+            'functie' => 'admin',
             'last_login' => Carbon::now()->format('Y-m-d H:i:s'),
             'admin' => '1',
         ]);

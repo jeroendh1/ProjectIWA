@@ -20,19 +20,16 @@ class CustomerSeeder extends Seeder
             'first_name'    => 'john',
             'last_name' => 'doe',
             'email'=> 'johndoe@iwa.nl',
-            'token'=> hash('sha256', Str::random(60)),
         ]);
         customer::create([
             'first_name'    => 'test',
             'last_name' => 'klant1',
             'email'=> 'testkLant1@iwa.nl',
-            'token'=> hash('sha256', Str::random(60)),
         ]);
         customer::create([
             'first_name'    => 'test',
             'last_name' => 'klant2',
             'email'=> 'testllant2@iwa.nl',
-            'token'=> hash('sha256', Str::random(60)),
         ]);
     }
 }
