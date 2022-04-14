@@ -120,7 +120,7 @@
                                         <div class="mb-3 col-sm-4">
                                             <label for="end_date" class="form-label">Eind datum</label>
                                             <input type="date" name="end_date" class="form-control"
-                                                   id="end_date" value="{{$abonnement->end_date}}">
+                                                   id="end_date" min="{{$abonnement->start_date}}" value="{{$abonnement->end_date}}">
                                         </div>
                                         <div class="mb-3 col-sm-4">
                                             <label class="form-label">Type</label>
@@ -137,7 +137,7 @@
                                         <div class="mb-3 col-sm-4 row">
                                             <label for="gt" class="form-label">Token</label>
                                             <div class="col-sm-11">
-                                                <input type="text" name="gt" class="form-control"
+                                                <input type="text" disabled name="gt" class="form-control"
                                                        id="gt{{$abonnement->abonnement_id}}"
                                                        value="{{$abonnement->token}}">
                                             </div>
@@ -167,11 +167,12 @@
             $.ajax({
                 url: '{{route('generateToken')}}',
             }).done(function (result) {
-                console.log("#gt" + id);
                 $("#gt" + id).val(result);
             });
-
         }
+        $("#start_date").on("change", function(){
+            $("#end_date").attr("min", $(this).val());
+        });
     </script>
     <script>
 
