@@ -98,7 +98,9 @@
 {{--                        Geen query string--}}
                     @else
                         @foreach($malfunctions as $malfunction)
+
                             @if ($malfunction->longitude == 0.9999)
+
                                 <tr style="color: #ff0000">
                                     <td><a href="/home?station={{ $malfunction->station_id }}">{{ $malfunction->station_id }}</a></td>
                                     <td><a href="/home?country={{ $malfunction->country }}">{{ $malfunction->country }}</a></td>
