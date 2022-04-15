@@ -11,7 +11,7 @@ class station extends Model
 
     public $timestamps = false;
 
-    protected $primaryKey = 'station_id';
+    protected $primaryKey = 'stn_name';
     public $incrementing = false;
 
 }
