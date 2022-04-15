@@ -83,7 +83,7 @@ class WeatherDataController extends Controller
         //
     }
 
-    function checkData(int $stn, $field)
+    public function checkData(int $stn, $field)
     {
         $gemiddelde = 0;
         $laatste_30 = DB::select("SELECT $field from weatherdata WHERE STN = $stn ORDER BY data_id DESC LIMIT 30");
