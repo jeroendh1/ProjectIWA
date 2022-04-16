@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class WeatherDataController extends Controller
 {
-    private string $dateFormat = 'Y-m-d H:i:s';
-
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +20,7 @@ class WeatherDataController extends Controller
      */
     public function index()
     {
+
     }
 
     /**
@@ -45,7 +44,7 @@ class WeatherDataController extends Controller
                     LIMIT 30
                 ");
 
-                if (count($records) >= 10) {
+                if (count($records) >= 2) {
                     $x = [];
                     $y = [];
 
@@ -95,16 +94,16 @@ class WeatherDataController extends Controller
                     $wd->DATE =    $item["DATE"];
                     $wd->TIME =    $item["TIME"];
                     $wd->TEMP =    $percentage > 20 || $percentage < -20 ? $item['ESTIMATED_TEMP'] : $item['TEMP'];
-                    $wd->DEWP =    is_float($item["DEWP"])     ? $item["DEWP"]     : null; // average value
-                    $wd->STP =     is_float($item["STP"])      ? $item["STP"]      : null; // average value
-                    $wd->SLP =     is_float($item["SLP"])      ? $item["SLP"]      : null; // average value
-                    $wd->VISIB =   is_float($item["VISIB"])    ? $item["VISIB"]    : null; // average value
-                    $wd->WDSP =    is_float($item["WDSP"])     ? $item["WDSP"]     : null; // average value
-                    $wd->PRCP =    is_float($item["PRCP"])     ? $item["PRCP"]     : null; // average value
-                    $wd->SNDP =    is_float($item["SNDP"])     ? $item["SNDP"]     : null; // average value
-                    $wd->FRSHTT =  $item["FRSHTT"];
-                    $wd->CLDC =    is_float($item["CLDC"])     ? $item["CLDC"]     : null; // average value
-                    $wd->WNDDIR =  is_integer($item["WNDDIR"]) ? $item["WNDDIR"]   : null; // average value
+                    $wd->DEWP =    is_float($item["DEWP"])     ? $item["DEWP"]     : $this->average('DEWP', $records);
+                    $wd->STP =     is_float($item["STP"])      ? $item["STP"]      : $this->average('STP', $records);
+                    $wd->SLP =     is_float($item["SLP"])      ? $item["SLP"]      : $this->average('SLP', $records);
+                    $wd->VISIB =   is_float($item["VISIB"])    ? $item["VISIB"]    : $this->average('VISIB', $records);
+                    $wd->WDSP =    is_float($item["WDSP"])     ? $item["WDSP"]     : $this->average('WDSP', $records);
+                    $wd->PRCP =    is_float($item["PRCP"])     ? $item["PRCP"]     : $this->average('PRCP', $records);
+                    $wd->SNDP =    is_float($item["SNDP"])     ? $item["SNDP"]     : $this->average('SNDP', $records);
+                    $wd->FRSHTT =  strlen($item["FRSHTT"])!=0  ? $item["FRSHTT"]   : $this->mostFrequent($records);
+                    $wd->CLDC =    is_float($item["CLDC"])     ? $item["CLDC"]     : $this->average('CLDC', $records);
+                    $wd->WNDDIR =  is_integer($item["WNDDIR"]) ? $item["WNDDIR"]   : $this->average('WNDDIR', $records);
                     $wd->original_data_id = $owd->id;
                     $wd->save();
                 } else {
@@ -143,8 +142,33 @@ class WeatherDataController extends Controller
         if (!is_float($data["PRCP"]))               return false;
         if (!is_float($data["SNDP"]))               return false;
         if (!is_float($data["CLDC"]))               return false;
+        if (strlen($data["FRSHTT"]) == 0)           return false;
         if (!is_integer($data["WNDDIR"]))           return false;
 
         return true;
+    }
+
+    private function average(string $key, array $records) {
+        $sum = 0;
+        foreach ($records as $record) {
+            $record = (array) $record;
+            $sum += $record[$key];
+        }
+        return count($records) ? $sum / count($records) : 0;
+    }
+
+    private function mostFrequent(array $records) {
+        $map = [];
+
+        foreach ($records as $record) {
+            $record = (array) $record;
+            if (!array_key_exists($record['FRSHTT'], $map)) {
+                $map[$record['FRSHTT']] = 1;
+            } else {
+                $map[$record['FRSHTT']] += 1;
+            }
+        }
+
+        return array_search(max($map), $map);
     }
 }
