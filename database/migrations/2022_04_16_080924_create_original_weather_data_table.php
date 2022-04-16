@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('weatherdata', function (Blueprint $table) {
+        Schema::create('original_weather_data', function (Blueprint $table) {
             $table->id();
             $table->string('STN')->nullable();
             $table->date('DATE')->nullable();
@@ -29,7 +29,6 @@ return new class extends Migration
             $table->string('FRSHTT')->nullable();
             $table->float('CLDC')->nullable();
             $table->Integer('WNDDIR')->nullable();
-            $table->Integer('original_data_id')->nullable();
         });
     }
 
@@ -40,7 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('weather_data');
+        Schema::dropIfExists('original_weather_data');
     }
 };
