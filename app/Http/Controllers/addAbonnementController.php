@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use mysql_xdevapi\Table;
 
 class addAbonnementController extends Controller
@@ -38,15 +39,17 @@ class addAbonnementController extends Controller
         $abonnement->start_date = $request->start_date;
         $abonnement->end_date = $request->end_date;
         $abonnement->abonnement_type_id = $request->abonnement_type;
+        $abonnement->token = hash('sha256', Str::random(60));
         $abonnement->save();
         return redirect('addAbonnement')->with('success', 'record succesfull inserted');
 
     }
     public function editAbonnement(Request $request, $abonnement_id){
         $abonnement = abonnement::find($abonnement_id);
-        error_log($abonnement);
+
         $abonnement->start_date = $request->start_date;
         $abonnement->end_date = $request->end_date;
+        $abonnement->token = $request->gt;
         $abonnement->abonnement_type_id = $request->abonnement_type;
         $abonnement->save();
         return redirect('addAbonnement')->with('success', 'record succesfull updated');
@@ -59,5 +62,8 @@ class addAbonnementController extends Controller
     }
     public function errormsg(){
         return back()->with('error', 'Klant niet gevonden');
+    }
+    public static function generateToken(){
+        return hash('sha256', Str::random(60));;
     }
 }
