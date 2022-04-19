@@ -41,6 +41,6 @@ return new class extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('weather_data');
+        Schema::dropIfExists('weatherdata');
     }
 };
