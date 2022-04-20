@@ -9,10 +9,11 @@ class StationController
     public function station($station_id) {
         $station = $this->getSingleStation($station_id);
         $charts = $this->getCharts($station_id);
+        $status = $this->getStatus($station_id);
 //        var_dump($charts);
 //        $station = station::find($station_id);
 
-        return view('station', ['station' => $station, 'charts' => $charts]);
+        return view('station', ['station' => $station, 'charts' => $charts, 'status' => $status]);
     }
 
     public function getSingleStation($station_id) {
@@ -40,6 +41,18 @@ class StationController
         return false;
     }
 
+    public function getStatus($station_id)
+    {
+        $output = DB::select("
+            select STN, original_data_id from weatherdata
+            where STN = $station_id
+            order by DATE desc, TIME desc
+            limit 1
+        ");
+        if ($output[0]->original_data_id != null) return 'Storing';
+        else return 'In werkende staat';
+    }
+
 
     public function getCharts($station_id)
     {
@@ -48,17 +61,16 @@ class StationController
 //        var_dump($this->getSingleStationData($station_id));
         if (!$this->getSingleStationData($station_id)) return false;
         $charts = array();
-        $charts += ['temperatuur' => $this->getChartData($station_id, 'TEMP')];
-        $charts += ['dewp' => $this->getChartData($station_id, 'DEWP')];
-        $charts += ['stp' => $this->getChartData($station_id, 'STP')];
-        $charts += ['slp' => $this->getChartData($station_id, 'SLP')];
-        $charts += ['visib' => $this->getChartData($station_id, 'VISIB')];
-        $charts += ['wdsp' => $this->getChartData($station_id, 'WDSP')];
-        $charts += ['prcp' => $this->getChartData($station_id, 'PRCP')];
-        $charts += ['sndp' => $this->getChartData($station_id, 'SNDP')];
-        $charts += ['frshtt' => $this->getChartData($station_id, 'FRSHTT')];
-        $charts += ['cldc' => $this->getChartData($station_id, 'CLDC')];
-        $charts += ['wnddir' => $this->getChartData($station_id, 'WNDDIR')];
+        $charts += ['temperatuur in graden' => $this->getChartData($station_id, 'TEMP')];
+        $charts += ['temperatuur bij het dauwpunt in graden' => $this->getChartData($station_id, 'DEWP')];
+        $charts += ['luchtdruk bij het station in hPa' => $this->getChartData($station_id, 'STP')];
+        $charts += ['luchtdruk bij zeeniveau in hPa' => $this->getChartData($station_id, 'SLP')];
+        $charts += ['zicht in meters' => $this->getChartData($station_id, 'VISIB')];
+        $charts += ['windsnelheid km/s' => $this->getChartData($station_id, 'WDSP')];
+        $charts += ['neerslag in mm' => $this->getChartData($station_id, 'PRCP')];
+        $charts += ['sneeuwdiepte in mm' => $this->getChartData($station_id, 'SNDP')];
+        $charts += ['bewolking in %' => $this->getChartData($station_id, 'CLDC')];
+        $charts += ['windrichting in graden' => $this->getChartData($station_id, 'WNDDIR')];
 //        var_dump($charts);
         return $charts;
     }

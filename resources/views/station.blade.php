@@ -27,9 +27,15 @@
                 <div class="row">
                     <div class="col-sm-4"><h4><b>Coördinaten:</b> {{ $station->longitude }}, {{ $station->latitude }} </h4></div>
                 </div>
+                @if ($status == 'Storing')
                 <div class="row">
-                    <div class="col-sm-4"><h4><b>Status:</b> In werkende staat </h4></div>
+                    <div class="col-sm-4"><h4 class="storing"><b>Status:</b> {{ $status }} </h4></div>
                 </div>
+                @else
+                <div class="row">
+                    <div class="col-sm-4"><h4><b>Status:</b> {{ $status }} </h4></div>
+                </div>
+                @endif
                 @if (!$charts)
                     <div class="row">
                         <div class="col-sm-4">

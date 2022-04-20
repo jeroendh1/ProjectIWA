@@ -6,12 +6,10 @@
     @if(!isset(Auth::user()->username))
         <script>window.location = "/login";</script>
     @endif
+<?php
 
-{{--    <style>--}}
-{{--        .storing {--}}
-{{--            color: #f00;--}}
-{{--        }--}}
-{{--    </style>--}}
+//var_dump($statuses);
+?>
 
     <div class="container-lg mt-4">
         <div class="table-responsive overflow-hidden">
@@ -125,21 +123,21 @@
                     <tbody>
 {{--                        Geen query string--}}
                         @foreach($malfunctions as $malfunction)
-                            @if ($malfunction->longitude == 0.9999)
-                                <tr class="storing">
-                                    <td><a href="/station/{{ $malfunction->station_id }}">{{ $malfunction->station_id }}</a></td>
-                                    <td>{{ $malfunction->country }}</td>
-                                    <td>{{$malfunction->name}}</td>
-                                    <td>{{$malfunction->longitude}},{{$malfunction->latitude}}</td>
-                                    <td>Storing</td>
-                                </tr>
-                            @else
+                            @if ($statuses[$malfunction->station_id] == true)
                                 <tr>
                                     <td><a href="/station/{{ $malfunction->station_id }}">{{ $malfunction->station_id }}</a></td>
                                     <td>{{ $malfunction->country }}</td>
                                     <td>{{$malfunction->name}}</td>
                                     <td>{{$malfunction->longitude}},{{$malfunction->latitude}}</td>
                                     <td>In werkende staat</td>
+                                </tr>
+                            @else
+                                <tr class="storing">
+                                    <td><a href="/station/{{ $malfunction->station_id }}">{{ $malfunction->station_id }}</a></td>
+                                    <td>{{ $malfunction->country }}</td>
+                                    <td>{{$malfunction->name}}</td>
+                                    <td>{{$malfunction->longitude}}, {{$malfunction->latitude}}</td>
+                                    <td>Storing</td>
                                 </tr>
                             @endif
                         @endforeach

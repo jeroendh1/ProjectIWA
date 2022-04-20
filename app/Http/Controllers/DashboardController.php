@@ -13,17 +13,19 @@ class DashboardController extends Controller
 {
     public function getVariables(Request $request) {
         $vars = array();
-        $vars += $this->getMalfunctions($request);
+
         $vars += $this->getStations();
         $vars += $this->getCountries();
         $vars += $this->getLocations();
+        $vars += $this->getStatuses();
+        $vars += $this->getMalfunctions($request, $vars['statuses']);
 
         return view('home', $vars);
     }
 
-    public function getMalfunctions(Request $request) {
-//        echo '<br><br><br><br><br>';
-        $filter = $this->filter($request);
+    public function getMalfunctions(Request $request, $statuses) {
+//        echo '<br><br><br><br><br><pre>';
+        $filter = $this->filter($request, $statuses);
         $query = 'select stations.station_id, stations.longitude, stations.latitude, nl.name, c.country from stations
             join geolocations gs on stations.station_id = gs.station_id
             join countries c on gs.country_code = c.country_code
@@ -46,8 +48,17 @@ class DashboardController extends Controller
     }
 
     public function getStatuses() {
-        $tableStatuses = DB::select('select distinct longitude from stations');
-        sort($tableStatuses);
+        $stations = $this->getStations();
+        $tableStatuses = array();
+        foreach ($stations['stations'] as $station) {
+            $output = $this->getStatus($station);
+            if ($output != []) {
+                if ($output[0]->original_data_id == null) $tableStatuses += [$output[0]->STN => true];
+                else $tableStatuses += [$output[0]->STN => false];
+            } else {
+                $tableStatuses += [$station->station_id => true];
+            }
+        }
         return ['statuses' => $tableStatuses];
     }
 
@@ -57,7 +68,18 @@ class DashboardController extends Controller
         return ['locations' => $tableLocations];
     }
 
-    public function filter(Request $request): string
+    public function getStatus($station)
+    {
+        $output = DB::select("
+            select STN, original_data_id from weatherdata
+            where STN = $station->station_id
+            order by DATE desc, TIME desc
+            limit 1
+        ");
+        return $output;
+    }
+
+    public function filter(Request $request, $statuses): string
     {
         $filter = '';
         if ($request->station_naam!='null' && $request->station_naam!='') {
@@ -90,15 +112,20 @@ class DashboardController extends Controller
 //        }
         if ($request->status!='null' && $request->status!='') {
             $status = $request->status;
+            if ($filter == '') $filter .= " where (";
+            else $filter .= " and (";
             if ($status == 'storing') {
-                if ($filter == '') $filter .= " where stations.longitude = 0.9999";
-                else $filter .= " and stations.longitude = 0.9999";
+                foreach ($statuses as $key => $status) {
+                    if ($status == false) $filter .= "stations.station_id = $key or ";
+                }
             } else {
-                if ($filter == '') $filter .= " where stations.longitude != 0.9999";
-                else $filter .= " and stations.longitude != 0.9999";
+                foreach ($statuses as $key => $status) {
+                    if ($status == false) $filter .= "stations.station_id != $key and ";
+                }
             }
+            $filter = substr($filter,0,-4);
+            $filter .= ') ';
         }
-        $filter .=' order by longitude desc';
         if ($request->aantal!='all') {
             if ($request->aantal == "") {
 
