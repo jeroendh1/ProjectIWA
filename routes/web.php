@@ -40,7 +40,7 @@ Route::post('/home', 'App\Http\Controllers\DashboardController@getVariables')->n
 Route::post('/', 'App\Http\Controllers\DashboardController@getVariables')->name('getVariablesFilter');
 
 
-Route::get('/station/{stn_name}',  'App\Http\Controllers\DashboardController@station')->name('station');
+Route::get('/station/{station}',  'App\Http\Controllers\StationController@station')->name('station');
 
 
 Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->name('login-form-submit');

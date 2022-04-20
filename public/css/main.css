@@ -5,3 +5,7 @@ button.btn, input.btn{
 i.material-icons{
   color:  #0540de!important;
 }
+
+.storing {
+    color: #f00;
+}
