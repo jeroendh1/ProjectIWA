@@ -46,7 +46,7 @@ class addAbonnementController extends Controller
     }
     public function editAbonnement(Request $request, $abonnement_id){
         $abonnement = abonnement::find($abonnement_id);
-
+        error_log($request);
         $abonnement->start_date = $request->start_date;
         $abonnement->end_date = $request->end_date;
         $abonnement->token = $request->gt;

@@ -167,7 +167,8 @@
             $.ajax({
                 url: '{{route('generateToken')}}',
             }).done(function (result) {
-                $("#gt" + id).val(result);
+                console.log(result);
+                $("#gt" + id).attr('value', result);
             });
         }
         $("#start_date").on("change", function(){

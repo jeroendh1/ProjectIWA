@@ -25,6 +25,7 @@ class DashboardController extends Controller
 
     public function getMalfunctions(Request $request, $statuses) {
         if ($request->station_naam!='null' && $request->station_naam!='') {
+            error_log($request->station_naam);
             $station_naam = $request->station_naam;
             $tableMalfunctions = DB::table('stations')
                 ->join( 'geolocations', 'stations.station_id', '=',  'geolocations.station_id')
@@ -33,16 +34,16 @@ class DashboardController extends Controller
                 ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
                 ->where( 'weatherdata.time', function($query) {
                     $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
-                ->where('weatherdata.original_data_id', '!=', null)
                 ->where('stations.station_id', '=', $station_naam )
                 ->orderByDesc('weatherdata.date')
                 ->orderByDesc('weatherdata.time')
                 ->paginate(100);
 
-
+error_log($tableMalfunctions);
             return ['malfunctions' => $tableMalfunctions];
         }
         if ($request->land!='null' && $request->land!='') {
+            $land = $request->land;
             $tableMalfunctions = DB::table('stations')
                 ->join( 'geolocations', 'stations.station_id', '=',  'geolocations.station_id')
                 ->join('countries' , 'geolocations.country_code', '=', 'countries.country_code')
@@ -50,7 +51,6 @@ class DashboardController extends Controller
                 ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
                 ->where( 'weatherdata.time', function($query) {
                     $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
-                ->where('weatherdata.original_data_id', '!=', null)
                 ->where('countries.country', '=', $land  )
                 ->orderByDesc('weatherdata.date')
                 ->orderByDesc('weatherdata.time')
@@ -69,7 +69,6 @@ class DashboardController extends Controller
                 ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
                 ->where( 'weatherdata.time', function($query) {
                     $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
-                ->where('weatherdata.original_data_id', '!=', null)
                 ->where('nearestlocations.name', '=', $locatie)
                 ->orderByDesc('weatherdata.date')
                 ->orderByDesc('weatherdata.time')
