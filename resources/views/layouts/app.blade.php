@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>IWA</title>
-    <link rel="stylesheet" href="/resources/css/app.css">
+    <title>IWA Project</title>
+    <link rel="stylesheet" href="/css/app.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" >
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -14,7 +14,7 @@
 
 @include('inc.navbar')
 @yield('content')
-
+@include('inc.footer')
 
 </body>
 </html>

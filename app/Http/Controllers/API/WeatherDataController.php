@@ -171,4 +171,18 @@ class WeatherDataController extends Controller
 
         return array_search(max($map), $map);
     }
+
+    public function checkData(int $stn, $field)
+    {
+        $gemiddelde = 0;
+        $laatste_30 = DB::select("SELECT $field from weatherdata WHERE STN = $stn ORDER BY data_id DESC LIMIT 30");
+        $laatste_30 = json_decode(json_encode($laatste_30), true);
+        if (!empty($laatste_30)){
+            foreach ($laatste_30 as $wheatherdata) {
+                $gemiddelde += $wheatherdata[$field];
+            }
+        }
+        $gemiddelde = $gemiddelde / count($laatste_30);
+        return $gemiddelde;
+    }
 }
