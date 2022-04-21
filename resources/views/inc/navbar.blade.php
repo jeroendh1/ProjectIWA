@@ -7,15 +7,15 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="/home">Home</a>
-                <a class="nav-link" href="/addAbonnement">abonnement</a>
+                <a class="nav-link" href="/addAbonnement">Abonnement</a>
                 @if(isset(Auth::user()->admin)  and Auth::user()->admin == 1)
-                <a class="nav-link" href="/addUser">Gebruikers</a>
+                <a class="nav-link" href="/addUser">Medewerkers</a>
                 @endif
             </div>
                 <div class="navbar-nav">
                 @if(isset(Auth::user()->username))
                 <strong style="color: gray; padding: 0.5rem 0.1rem">Welcome {{ Auth::user()->username }}</strong>
-                <a class="nav-link float-end"  href="{{ url('/login/logout') }}">logout</a>
+                <a class="nav-link float-end"  href="{{ url('/login/logout') }}">Uitloggen</a>
                 @endif
             </div>
         </div>

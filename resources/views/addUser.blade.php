@@ -15,11 +15,11 @@
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
-                        <div class="col-sm-8"><h2>Gebruiker <b>Gegevens</b></h2></div>
+                        <div class="col-sm-8"><h2>Medewerker <b>gegevens</b></h2></div>
                         <div class="col-sm-4">
                             <button type="button" class="btn btn-info float-end " data-bs-toggle="collapse"
                                     data-bs-target="#adduser" aria-expanded="false" aria-controls="adduser">
-                                Nieuwe gebruiker
+                                Nieuwe medewerker
                             </button>
 
                         </div>
@@ -66,8 +66,8 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="mb-3 offset-4 col-sm-4">
-                                            <input type="submit" value="Gebruiker toevoegen" name="create_user"
+                                        <div class="mb-3 offset-8 col-sm-4">
+                                            <input type="submit" value="Medewerker toevoegen" name="create_user"
                                                    class="btn btn-primary mt-4 float-end"/>
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Gebruikers naam</th>
+                        <th>Gebruikersnaam</th>
                         <th>Voornaam</th>
                         <th>Achternaam</th>
                         <th>Email</th>
@@ -147,7 +147,7 @@
                                             </label>
                                         </div>
 
-                                        <div class="mb-3 offset-4 col-sm-4">
+                                        <div class="mb-3 offset-8 col-sm-4">
                                             <input type="submit" value="Bijwerken" name="edit_user"
                                                    class="btn btn-primary mt-4 float-end"/>
                                         </div>

@@ -22,9 +22,9 @@
                             <form method="post" action="{{route('getVariablesFilter')}}" class="">
                                 @csrf
                                 <div class="row">
-                                    <div class="mb-3 col-sm-4">
+                                    <div class="mb-3 col-sm-3">
                                         <label for="station_naam" class="form-label">Station naam</label>
-                                        <input type="text"  name="station_naam" id="station_naam" >
+                                        <input type="text" class="form-control" name="station_naam" id="station_naam" >
 {{--                                        <select name="station_naam" class="form-control"--}}
 {{--                                                id="station_naam">--}}
 
@@ -34,9 +34,9 @@
 {{--                                            @endforeach--}}
 {{--                                        </select>--}}
                                     </div>
-                                    <div class="mb-3 col-sm-4">
+                                    <div class="mb-3 col-sm-3">
                                         <label for="land" class="form-label">Land</label>
-                                        <input type="text" name="land" id="land">
+                                        <input type="text" class="form-control" name="land" id="land">
 {{--                                        <select name="land" class="form-control"--}}
 {{--                                                id="land">--}}
 
@@ -46,9 +46,9 @@
 {{--                                            @endforeach--}}
 {{--                                        </select>--}}
                                     </div>
-                                    <div class="mb-3 col-sm-4">
+                                    <div class="mb-3 col-sm-3">
                                         <label for="locatie" class="form-label">Locatie</label>
-                                        <input type="text " name="locatie" id="locatie">
+                                        <input type="text "  class="form-control" name="locatie" id="locatie">
 {{--                                        <select name="locatie" class="form-control"--}}
 {{--                                                id="locatie">--}}
 
@@ -58,6 +58,17 @@
 {{--                                            @endforeach--}}
 {{--                                        </select>--}}
                                     </div>
+                                    <div class="mb-3 col-sm-3">
+                                                                                <label for="Status" class="form-label">Status</label>
+                                                                                <select name="status" class="form-control"
+                                                                                        id="status">
+
+                                                                                    <option value="storing" selected>Storing</option>
+                                                                                    <option value="ok">In werkende staat</option>
+                                                                                    <option value="alles">Alles weergeven</option>
+
+                                                                                </select>
+                                                                            </div>
 {{--                                    Filter voor coördinaten, werkt maar filter is niet nuttig.--}}
 {{--                                    Om te gebruiken uncomment code in home.blade.php--}}
 {{--                                    Mist echter longitude en latitude van variabele $station uit getStations() van DashboardController.php--}}
@@ -96,7 +107,7 @@
 {{--                                        </select>--}}
 {{--                                    </div>--}}
                                 </div>
-                                <div class="mb-3 offset-4 col-sm-4">
+                                <div class="mb-3 offset-8 col-sm-4">
                                     <input type="submit" value="filter" name="filter"
                                            class="btn btn-primary mt-4 float-end"/>
                                 </div>
@@ -126,7 +137,11 @@
                                     <td>{{ $malfunction->country }}</td>
                                     <td>{{$malfunction->name}}</td>
                                     <td>{{$malfunction->longitude}},{{$malfunction->latitude}}</td>
+                                    @if($malfunction->original_data_id == null)
                                     <td>In werkende staat</td>
+                                    @else
+                                        <td class="storing">Storing</td>
+                                    @endif
                                 </tr>
 {{--                            @else--}}
 {{--                                <tr class="storing">--}}

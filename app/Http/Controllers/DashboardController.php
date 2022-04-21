@@ -30,18 +30,32 @@ class DashboardController extends Controller
                 ->join( 'geolocations', 'stations.station_id', '=',  'geolocations.station_id')
                 ->join('countries' , 'geolocations.country_code', '=', 'countries.country_code')
                 ->join('nearestlocations', 'stations.station_id', '=', 'nearestlocations.station_id')
+                ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
+                ->where( 'weatherdata.time', function($query) {
+                    $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
+                ->where('weatherdata.original_data_id', '!=', null)
                 ->where('stations.station_id', '=', $station_naam )
+                ->orderByDesc('weatherdata.date')
+                ->orderByDesc('weatherdata.time')
                 ->paginate(100);
+
+
             return ['malfunctions' => $tableMalfunctions];
         }
         if ($request->land!='null' && $request->land!='') {
-            $land = $request->land;
             $tableMalfunctions = DB::table('stations')
                 ->join( 'geolocations', 'stations.station_id', '=',  'geolocations.station_id')
                 ->join('countries' , 'geolocations.country_code', '=', 'countries.country_code')
                 ->join('nearestlocations', 'stations.station_id', '=', 'nearestlocations.station_id')
-                ->where('countries.country', '=', $land )
+                ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
+                ->where( 'weatherdata.time', function($query) {
+                    $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
+                ->where('weatherdata.original_data_id', '!=', null)
+                ->where('countries.country', '=', $land  )
+                ->orderByDesc('weatherdata.date')
+                ->orderByDesc('weatherdata.time')
                 ->paginate(100);
+
             return ['malfunctions' => $tableMalfunctions];
 
         }
@@ -52,23 +66,64 @@ class DashboardController extends Controller
                 ->join( 'geolocations', 'stations.station_id', '=',  'geolocations.station_id')
                 ->join('countries' , 'geolocations.country_code', '=', 'countries.country_code')
                 ->join('nearestlocations', 'stations.station_id', '=', 'nearestlocations.station_id')
-                ->where('nearestlocations.name', '=', $locatie )
+                ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
+                ->where( 'weatherdata.time', function($query) {
+                    $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
+                ->where('weatherdata.original_data_id', '!=', null)
+                ->where('nearestlocations.name', '=', $locatie)
+                ->orderByDesc('weatherdata.date')
+                ->orderByDesc('weatherdata.time')
                 ->paginate(100);
+
             return ['malfunctions' => $tableMalfunctions];
 
+        }
+        if ($request->status!='storing' && $request->status!='') {
+
+            $status = $request->status;
+            error_log($status);
+            if ($status == 'ok'){
+                $tableMalfunctions = DB::table('stations')
+                    ->join( 'geolocations', 'stations.station_id', '=',  'geolocations.station_id')
+                    ->join('countries' , 'geolocations.country_code', '=', 'countries.country_code')
+                    ->join('nearestlocations', 'stations.station_id', '=', 'nearestlocations.station_id')
+                    ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
+                    ->where( 'weatherdata.time', function($query) {
+                        $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
+                    ->where('weatherdata.original_data_id', '=', null)
+                    ->orderByDesc('weatherdata.date')
+                    ->orderByDesc('weatherdata.time')
+                    ->paginate(100);
+
+                return ['malfunctions' => $tableMalfunctions];
+            }
+            else {
+                $tableMalfunctions = DB::table('stations')
+                    ->join( 'geolocations', 'stations.station_id', '=',  'geolocations.station_id')
+                    ->join('countries' , 'geolocations.country_code', '=', 'countries.country_code')
+                    ->join('nearestlocations', 'stations.station_id', '=', 'nearestlocations.station_id')
+                    ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
+                    ->where( 'weatherdata.time', function($query) {
+                        $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
+                    ->orderByDesc('weatherdata.date')
+                    ->orderByDesc('weatherdata.time')
+                    ->paginate(100);
+
+                return ['malfunctions' => $tableMalfunctions];
+            }
         }
         $tableMalfunctions = DB::table('stations')
             ->join( 'geolocations', 'stations.station_id', '=',  'geolocations.station_id')
             ->join('countries' , 'geolocations.country_code', '=', 'countries.country_code')
             ->join('nearestlocations', 'stations.station_id', '=', 'nearestlocations.station_id')
-            ->join('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
+            ->leftJoin('weatherdata', 'weatherdata.STN', '=', 'stations.station_id')
+            ->where( 'weatherdata.time', function($query) {
+                $query->select(DB::raw('MAX(time)'))->from('weatherdata')->whereRaw('stn = stations.station_id');})
+->where('weatherdata.original_data_id', '!=', null)
             ->orderByDesc('weatherdata.date')
             ->orderByDesc('weatherdata.time')
-        ->paginate(100);
+             ->paginate(100);
 
-
-//            ;
-//        $tableMalfunctions = DB::select($query);
         return ['malfunctions' => $tableMalfunctions];
     }
 
