@@ -49,7 +49,7 @@ class StationController
             order by DATE desc, TIME desc
             limit 1
         ");
-        if ($output[0]->original_data_id != null) return 'Storing';
+        if (isset($output[0]->original_data_id)) return 'Storing';
         else return 'In werkende staat';
     }
 
