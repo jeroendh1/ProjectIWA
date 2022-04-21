@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();;
             $table->timestamp('regDate');
-            $table->string('city');
+            $table->string('functie');
             $table->dateTime('last_login');
             $table->boolean('admin');
         });

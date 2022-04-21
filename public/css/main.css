@@ -9,3 +9,9 @@ i.material-icons{
 .storing {
     color: #f00;
 }
+.text-sm.text-gray-700.leading-5{
+    margin-top: 15px;
+}
+.w-5{
+    display: none;
+}

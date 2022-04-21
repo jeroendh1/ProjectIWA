@@ -49,7 +49,7 @@ class StationController
             order by DATE desc, TIME desc
             limit 1
         ");
-        if ($output[0]->original_data_id != null) return 'Storing';
+        if (!empty($output) and $output[0]->original_data_id != null) return 'Storing';
         else return 'In werkende staat';
     }
 
@@ -82,7 +82,7 @@ class StationController
         $data = $this->getSingleStationData($station_id);
 
         foreach ($data as $item) {
-            $hour = explode(':',$item->TIME)[1];
+            $hour = explode(':',$item->TIME)[0];
             if (!isset($dots[$item->DATE.', '.$hour.' uur'])) $dots += [$item->DATE.', '.$hour.' uur' => [$item->$dataType]];
             else $dots[$item->DATE.', '.$hour.' uur'][] = $item->$dataType;
         }
@@ -96,8 +96,6 @@ class StationController
                 $result[1][] = round(array_sum($dot) / count($dot), 2);
             }
         }
-//        var_dump($result);
-
         return $result;
 
     }

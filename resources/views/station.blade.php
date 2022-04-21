@@ -44,7 +44,7 @@
                     </div>
                 @else
                     <div class="container px-4">
-                        <div class="row gx-5 border bg-opacity-10 bg-dark">
+                        <div class="row gx-5  bg-opacity-10 ">
                             @foreach($charts as $key => $chart)
 {{--                                <div class="col">--}}
 {{--                                    <div class="container-fluid border bg-opacity-10 bg-dark">--}}
@@ -61,8 +61,8 @@
                                                     datasets: [{
                                                         fill: false,
                                                         lineTension: 0,
-                                                        backgroundColor: "rgba(0,0,255,1.0)",
-                                                        borderColor: "rgba(0,0,255,0.1)",
+                                                        backgroundColor: "rgba(255, 255,255,1.0)",
+                                                        borderColor: "rgba(0,255,255,1)",
                                                         data: yValues
                                                     }]
                                                 },

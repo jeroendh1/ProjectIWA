@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('FRSHTT')->nullable();
             $table->float('CLDC')->nullable();
             $table->Integer('WNDDIR')->nullable();
-            $table->Integer('gecorrigeerde_data_id')->nullable();
+            $table->Integer('original_data_id')->nullable();
 //            $table->foreign('STN')->references('station_id')->on('stations');
         });
     }
