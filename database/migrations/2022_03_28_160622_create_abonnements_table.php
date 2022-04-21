@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->timestamp('last_update');
+            $table->string('token')->unique();
             $table->integer('abonnement_type_id')->unsigned();
             $table->foreign('abonnement_type_id')->references('id')->on('abonnement_types');
             $table->foreign('customer_id')->references('customer_id')->on('customers');

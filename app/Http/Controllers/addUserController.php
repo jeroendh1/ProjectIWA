@@ -16,7 +16,6 @@ class addUserController extends Controller
         return view('addUser', ['users' => $users]);
     }
     public function addUser(Request $request){
-        error_log($request);
         $user = new User;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);

@@ -84,7 +84,7 @@
                         <th>Voornaam</th>
                         <th>Achternaam</th>
                         <th>Email</th>
-                        <th>functie</th>
+                        <th>Functie</th>
                         <th>Actie</th>
                     </tr>
                     </thead>
@@ -136,14 +136,17 @@
 {{--                                        </div>--}}
 
                                         <div class="mb-3 col-sm-4">
-                                            <label for="functie" class="form-label">functie</label>
+                                            <label for="functie" class="form-label">Land</label>
                                             <input type="text" name="functie" class="form-control"
                                                    id="functie" value="{{$user->functie}}" required>
                                         </div>
                                         <div class="mb-3 col-sm-4">
-                                            <label class="form-label">admin</label>
-
+                                            <input class="form-check-input" name="admin" type="checkbox" id="admin">
+                                            <label class="form-check-label" for="admin">
+                                                Admin
+                                            </label>
                                         </div>
+
                                         <div class="mb-3 offset-4 col-sm-4">
                                             <input type="submit" value="Bijwerken" name="edit_user"
                                                    class="btn btn-primary mt-4 float-end"/>

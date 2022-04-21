@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('geolocations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('station_id');
-            $table->integer('country_id')->unsigned();
+            $table->string('country_code');
             $table->string('island')->nullable();
             $table->string('county')->nullable();
             $table->string('place')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('postcode')->nullable();
             $table->string('country')->nullable();
             $table->foreign('station_id')->references('station_id')->on('stations');
-            $table->foreign('country_id')->references('country_id')->on('countries');
+            // $table->foreign('country_code')->references('country_code')->on('countries');
         });
     }
 
