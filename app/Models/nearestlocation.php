@@ -10,15 +10,8 @@ class nearestlocation extends Model
     use HasFactory;
 
     public $timestamps = false;
-
-    protected $attributes = [
-        'id',
-        'station_id',
-        'name',
-        'administrative_region1',
-        'administrative_region2',
-        'country_code',
-        'longitude',
-        'latitude'
+    protected $fillable = [
+        'id','station_id','name','administrative_region1','administrative_region2', 'country_code', 'longitude','latitude'
     ];
+
 }

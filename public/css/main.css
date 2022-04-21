@@ -5,3 +5,8 @@ button.btn, input.btn{
 i.material-icons{
   color:  #0540de!important;
 }
+a.centerItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -22,17 +22,5 @@ class country extends Model
     // model ID is not auto-incrementing.
     public $incrementing = false;
     public $timestamps = false;
-    /**
-     * 
-     * Table Attributes
-     *
-     * @var array 
-     * 
-     */
-    protected $attributes = [
-        'country_id',
-        'country_code',
-        'country'
-    ];
 
 }

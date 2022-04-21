@@ -10,26 +10,9 @@ class geolocation extends Model
     use HasFactory;
 
     public $timestamps = false;
-    
-protected $attributes = [
-        'id',
-        'station_id',
-        'country_id',
-        'island',
-        'county',
-        'place',
-        'hamlet',
-        'town',
-        'municipality',
-        'state_district',
-        'administrative',
-        'state',
-        'village',
-        'region',
-        'province',
-        'city',
-        'locality',
-        'postcode',
-        'country'
+
+    protected $fillable = [
+        'id','station_id','country_code','island','county','place','hamlet','town','municipality','state_district','administrative','state','village','region','province','city','locality','postcode','country'
+
     ];
 }
