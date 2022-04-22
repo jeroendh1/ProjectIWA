@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #2a2a2a!important">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="{{asset("storage/iwalogo.PNG")}}"  style="max-height: 60px; margin-right: 30px">
@@ -16,7 +16,7 @@
             </div>
                 <div class="navbar-nav">
                 @if(isset(Auth::user()->username))
-                <strong style="color: gray; padding: 0.5rem 0.1rem; font-size: 17px;">Welcome {{ Auth::user()->username }}</strong>
+                <strong style="font-weight: 400;color: #a0a0a0; padding: 0.5rem 0.1rem; font-size: 17px;">Welcome {{ Auth::user()->username }}</strong>
                 <a class="nav-link float-end"  href="{{ url('/login/logout') }}" style="font-size: 17px;">Uitloggen</a>
                 @endif
             </div>
