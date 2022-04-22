@@ -6,7 +6,7 @@
     @if(isset(Auth::user()->username))
         <script>window.location = "/login/successlogin";</script>
     @endif
-    <div class="container mx-auto">
+    <div class="container-lg mx-auto">
         <div class="row">
             <form method="post" action="{{route('checklogin')}}" class="col-md-4 mx-auto mt-5">
                 @csrf

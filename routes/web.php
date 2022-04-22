@@ -41,4 +41,7 @@ Route::post('/', 'App\Http\Controllers\DashboardController@getVariables')->name(
 
 Route::get('/addUser/{user_id}/submit', 'App\Http\Controllers\addUserController@deleteUser')->name('deleteUser');
 
-
+Route::post('/login/submit', 'App\Http\Controllers\LoginControllerapp@submit')->name('login-form-submit');
+Route::post('/login/checklogin', 'App\Http\Controllers\LoginController@checklogin')->name('checklogin');
+Route::get('login/successlogin', 'App\Http\Controllers\LoginController@successlogin');
+Route::get('login/logout', 'App\Http\Controllers\LoginController@logout');
