@@ -8,6 +8,7 @@ use App\Models\abonnement;
 use App\Models\abonnement_type;
 use App\Models\customer;
 use App\Models\OriginalWeatherData;
+use App\Models\station;
 use App\Models\User;
 use App\Models\WeatherData;
 use DateTime;
@@ -195,33 +196,55 @@ class WeatherDataController extends Controller
         return array_search(max($map), $map);
     }
 
-    public function getField(Request $request, $column, $token) {
+    public function getField(Request $request, String $column, String $token) {
         if (!array_key_exists($column, $this->fields)) {
             return response()->json(['message' => 'field does not exists.'], 500);
         }
 
         $abonnement = abonnement::query()
             ->select()
-            ->where('token', $token)
+            ->where('token', '=', $token)
             ->first();
 
         if (is_null($abonnement)) {
             return response()->json(['message' => 'unauthorized'], 401);
         }
 
-        // $data = WeatherData::query()
-        //     ->select('STN', $this->fields[$column])
-        //     ->first();
-        $data = WeatherData::query() 
-	    ->join('nearestlocations', 'weatherdata.STN', '=', 'nearestlocations.station_id')
-	    ->join('countries', 'nearestlocations.country_code', '=', 'countries.country_code')
-	    ->join('stations', 'weatherdata.STN', '=', 'stations.station_id')
-	    ->join('abonnement_stations', 'stations.station_id', '=', 'abonnement_stations.station_id')
-	    ->join('abonnements', 'abonnement_stations.abonnement_id', '=', 'abonnements.abonnement_id')
-	    ->select('weatherdata.STN', 'weatherdata.' . $this->fields[$column], 'countries.country', 'nearestlocations.longitude', 'nearestlocations.latitude')
-        ->where('abonnements.token','=', $token)
-        ->groupBy('abonnement_stations.station_id')
-        ->get();
+//        $data = DB::select("SELECT ast.station_id as 'station-id', nl.name as 'station-name', (
+//                SELECT wd.{$this->fields[$column]}
+//                FROM weatherdata wd
+//                WHERE wd.STN = ast.station_id
+//                ORDER BY wd.DATE DESC, wd.TEMP DESC
+//                LIMIT 1
+//            ) as '$column', nl.longitude, nl.latitude
+//            FROM abonnements a
+//            JOIN abonnement_stations ast ON ast.abonnement_id = a.abonnement_id
+//            JOIN nearestlocations nl ON nl.station_id = ast.station_id
+//            JOIN weatherdata ");
+
+        $data = abonnement::query()
+            ->select([
+                "weatherdata.STN as station-id",
+                "nearestlocations.longitude",
+                "nearestlocations.latitude",
+                "weatherdata.{$this->fields[$column]} as {$column}",
+            ])
+            ->join('abonnement_stations', 'abonnement_stations.abonnement_id', 'abonnements.abonnement_id')
+            ->join('weatherdata', 'weatherdata.STN', 'abonnement_stations.station_id')
+            ->join('nearestlocations', 'nearestlocations.station_id', 'abonnement_stations.station_id')
+            ->where([
+                ['weatherdata.id', '=', function ($query) {
+                $query->select('weatherdata.id')
+                    ->from('weatherdata')
+                    ->whereColumn('weatherdata.STN', 'abonnement_stations.station_id')
+                    ->orderByDesc('weatherdata.DATE')
+                    ->orderByDesc('weatherdata.TIME')
+                    ->limit(1);
+                }],
+                ['abonnements.token', '=', $token]
+            ])
+            ->get();
+
 
         return response()->json($data);
     }
