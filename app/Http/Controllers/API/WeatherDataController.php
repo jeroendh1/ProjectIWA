@@ -197,31 +197,22 @@ class WeatherDataController extends Controller
     }
 
     public function getField(Request $request, String $column, String $token) {
-        if (!array_key_exists($column, $this->fields)) {
-            return response()->json(['message' => 'field does not exists.'], 500);
-        }
-
-        $abonnement = abonnement::query()
+        $subscription = abonnement::query()
             ->select()
             ->where('token', '=', $token)
             ->first();
 
-        if (is_null($abonnement)) {
+        // check if subscription token is valid
+        if (is_null($subscription)) {
             return response()->json(['message' => 'unauthorized'], 401);
         }
 
-//        $data = DB::select("SELECT ast.station_id as 'station-id', nl.name as 'station-name', (
-//                SELECT wd.{$this->fields[$column]}
-//                FROM weatherdata wd
-//                WHERE wd.STN = ast.station_id
-//                ORDER BY wd.DATE DESC, wd.TEMP DESC
-//                LIMIT 1
-//            ) as '$column', nl.longitude, nl.latitude
-//            FROM abonnements a
-//            JOIN abonnement_stations ast ON ast.abonnement_id = a.abonnement_id
-//            JOIN nearestlocations nl ON nl.station_id = ast.station_id
-//            JOIN weatherdata ");
+        // check if column exists
+        if (!array_key_exists($column, $this->fields)) {
+            return response()->json(['message' => 'column does not exists'], 500);
+        }
 
+        // retrieve associated data
         $data = abonnement::query()
             ->select([
                 "weatherdata.STN as station-id",
