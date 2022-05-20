@@ -225,6 +225,8 @@ class WeatherDataController extends Controller
         $data = abonnement::query()
             ->select([
                 "weatherdata.STN as station-id",
+                "nearestlocations.name as station-name",
+                "countries.country",
                 "nearestlocations.longitude",
                 "nearestlocations.latitude",
                 "weatherdata.{$this->fields[$column]} as {$column}",
@@ -232,6 +234,7 @@ class WeatherDataController extends Controller
             ->join('abonnement_stations', 'abonnement_stations.abonnement_id', 'abonnements.abonnement_id')
             ->join('weatherdata', 'weatherdata.STN', 'abonnement_stations.station_id')
             ->join('nearestlocations', 'nearestlocations.station_id', 'abonnement_stations.station_id')
+            ->join('countries', 'countries.country_code', 'nearestlocations.country_code')
             ->where([
                 ['weatherdata.id', '=', function ($query) {
                 $query->select('weatherdata.id')
