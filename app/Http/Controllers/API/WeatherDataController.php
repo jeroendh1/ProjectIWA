@@ -221,6 +221,8 @@ class WeatherDataController extends Controller
                 "nearestlocations.longitude",
                 "nearestlocations.latitude",
                 "weatherdata.{$this->fields[$column]} as {$column}",
+                "weatherdata.DATE as date",
+                "weatherdata.TIME as time",
             ])
             ->join('abonnement_stations', 'abonnement_stations.abonnement_id', 'abonnements.abonnement_id')
             ->join('weatherdata', 'weatherdata.STN', 'abonnement_stations.station_id')
