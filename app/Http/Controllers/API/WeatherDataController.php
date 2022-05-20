@@ -230,12 +230,12 @@ class WeatherDataController extends Controller
             ->join('countries', 'countries.country_code', 'nearestlocations.country_code')
             ->where([
                 ['weatherdata.id', '=', function ($query) {
-                $query->select('weatherdata.id')
-                    ->from('weatherdata')
-                    ->whereColumn('weatherdata.STN', 'abonnement_stations.station_id')
-                    ->orderByDesc('weatherdata.DATE')
-                    ->orderByDesc('weatherdata.TIME')
-                    ->limit(1);
+                    $query->select('weatherdata.id')
+                        ->from('weatherdata')
+                        ->whereColumn('weatherdata.STN', 'abonnement_stations.station_id')
+                        ->orderByDesc('weatherdata.DATE')
+                        ->orderByDesc('weatherdata.TIME')
+                        ->limit(1);
                 }],
                 ['abonnements.token', '=', $token]
             ])
