@@ -200,18 +200,28 @@ class WeatherDataController extends Controller
             return response()->json(['message' => 'field does not exists.'], 500);
         }
 
-        $customer = customer::query()
+        $abonnement = abonnement::query()
             ->select()
             ->where('token', $token)
             ->first();
 
-        if (is_null($customer)) {
+        if (is_null($abonnement)) {
             return response()->json(['message' => 'unauthorized'], 401);
         }
 
-        $data = WeatherData::query()
-            ->select('STN', $this->fields[$column])
-            ->first();
+        // $data = WeatherData::query()
+        //     ->select('STN', $this->fields[$column])
+        //     ->first();
+        $data = WeatherData::query() 
+	    ->join('nearestlocations', 'weatherdata.STN', '=', 'nearestlocations.station_id')
+	    ->join('countries', 'nearestlocations.country_code', '=', 'countries.country_code')
+	    ->join('stations', 'weatherdata.STN', '=', 'stations.station_id')
+	    ->join('abonnement_stations', 'stations.station_id', '=', 'abonnement_stations.station_id')
+	    ->join('abonnements', 'abonnement_stations.abonnement_id', '=', 'abonnements.abonnement_id')
+	    ->select('weatherdata.STN', 'weatherdata.' . $this->fields[$column], 'countries.country', 'nearestlocations.longitude', 'nearestlocations.latitude')
+        ->where('abonnements.token','=', $token)
+        ->groupBy('abonnement_stations.station_id')
+        ->get();
 
         return response()->json($data);
     }
