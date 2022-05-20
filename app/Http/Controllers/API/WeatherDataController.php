@@ -4,15 +4,38 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\TemperatureEstimator;
 use App\Http\Controllers\Controller;
+use App\Models\abonnement;
 use App\Models\abonnement_type;
+use App\Models\customer;
 use App\Models\OriginalWeatherData;
+use App\Models\User;
 use App\Models\WeatherData;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class WeatherDataController extends Controller
 {
+    private array $fields = [
+        'temperature' => 'TEMP',
+        'dew-point-temperature' => 'DEWP',
+        'station-air-pressure' => 'STP',
+        'sea-level-air-pressure' => 'SLP',
+        'visibility' => 'VISIB',
+        'wind-speed' => 'WDSP',
+        'rainfall' => 'PRCP',
+        'snow-depth' => 'SNDP',
+        'frost' => 'FRSHTT',
+        'rain' => 'FRSHTT',
+        'snow' => 'FRSHTT',
+        'hail' => 'FRSHTT',
+        'storm' => 'FRSHTT',
+        'tornado' => 'FRSHTT',
+        'cloud-cover' => 'CLDC',
+        'wind-direction' => 'WNDDIR',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -170,5 +193,26 @@ class WeatherDataController extends Controller
         }
 
         return array_search(max($map), $map);
+    }
+
+    public function getField(Request $request, $column, $token) {
+        if (!array_key_exists($column, $this->fields)) {
+            return response()->json(['message' => 'field does not exists.'], 500);
+        }
+
+        $customer = customer::query()
+            ->select()
+            ->where('token', $token)
+            ->first();
+
+        if (is_null($customer)) {
+            return response()->json(['message' => 'unauthorized'], 401);
+        }
+
+        $data = WeatherData::query()
+            ->select('STN', $this->fields[$column])
+            ->first();
+
+        return response()->json($data);
     }
 }
