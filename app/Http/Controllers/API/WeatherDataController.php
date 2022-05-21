@@ -216,7 +216,7 @@ class WeatherDataController extends Controller
         $data = abonnement::query()
             ->select([
                 "weatherdata.STN as station-id",
-                "nearestlocations.name as station-name",
+                "nearestlocations.name as location",
                 "countries.country",
                 "nearestlocations.longitude",
                 "nearestlocations.latitude",
