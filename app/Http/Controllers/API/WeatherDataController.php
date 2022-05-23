@@ -20,21 +20,21 @@ class WeatherDataController extends Controller
 {
     private array $fields = [
         'temperature' => 'TEMP',
-        'dew-point-temperature' => 'DEWP',
-        'station-air-pressure' => 'STP',
-        'sea-level-air-pressure' => 'SLP',
+        'dew-point_temperature' => 'DEWP',
+        'station_air_pressure' => 'STP',
+        'sea_level_air_pressure' => 'SLP',
         'visibility' => 'VISIB',
-        'wind-speed' => 'WDSP',
+        'wind_speed' => 'WDSP',
         'rainfall' => 'PRCP',
-        'snow-depth' => 'SNDP',
+        'snow_depth' => 'SNDP',
         'frost' => 'FRSHTT',
         'rain' => 'FRSHTT',
         'snow' => 'FRSHTT',
         'hail' => 'FRSHTT',
         'storm' => 'FRSHTT',
         'tornado' => 'FRSHTT',
-        'cloud-cover' => 'CLDC',
-        'wind-direction' => 'WNDDIR',
+        'cloud_cover' => 'CLDC',
+        'wind_direction' => 'WNDDIR',
     ];
 
     /**
@@ -212,8 +212,6 @@ class WeatherDataController extends Controller
             return response()->json(['message' => 'column does not exists'], 500);
         }
 
-        $propertyName = str_replace('-', '_', $column);
-
         // retrieve associated data
         $data = abonnement::query()
             ->select([
@@ -222,7 +220,7 @@ class WeatherDataController extends Controller
                 "countries.country",
                 "nearestlocations.longitude",
                 "nearestlocations.latitude",
-                "weatherdata.{$this->fields[$column]} as {$propertyName}",
+                "weatherdata.{$this->fields[$column]} as {$column}",
                 "weatherdata.DATE as date",
                 "weatherdata.TIME as time",
             ])
