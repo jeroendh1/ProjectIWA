@@ -212,15 +212,17 @@ class WeatherDataController extends Controller
             return response()->json(['message' => 'column does not exists'], 500);
         }
 
+        $propertyName = str_replace('-', '_', $column);
+
         // retrieve associated data
         $data = abonnement::query()
             ->select([
-                "weatherdata.STN as station-id",
+                "weatherdata.STN as station_id",
                 "nearestlocations.name as location",
                 "countries.country",
                 "nearestlocations.longitude",
                 "nearestlocations.latitude",
-                "weatherdata.{$this->fields[$column]} as {$column}",
+                "weatherdata.{$this->fields[$column]} as {$propertyName}",
                 "weatherdata.DATE as date",
                 "weatherdata.TIME as time",
             ])
