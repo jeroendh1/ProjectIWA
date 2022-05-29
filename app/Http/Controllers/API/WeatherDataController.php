@@ -125,7 +125,7 @@ class WeatherDataController extends Controller
                     $wd->WDSP =    is_float($item["WDSP"])     ? $item["WDSP"]     : $this->average('WDSP', $records);
                     $wd->PRCP =    is_float($item["PRCP"])     ? $item["PRCP"]     : $this->average('PRCP', $records);
                     $wd->SNDP =    is_float($item["SNDP"])     ? $item["SNDP"]     : $this->average('SNDP', $records);
-                    $wd->FRSHTT =  strlen($item["FRSHTT"])!=0  ? $item["FRSHTT"]   : $this->mostFrequent($records);
+                    $wd->FRSHTT =  strlen($item["FRSHTT"])!=0  ? $item["FRSHTT"]   : $this->mostFrequent('FRSHTT', $records);
                     $wd->CLDC =    is_float($item["CLDC"])     ? $item["CLDC"]     : $this->average('CLDC', $records);
                     $wd->WNDDIR =  is_integer($item["WNDDIR"]) ? $item["WNDDIR"]   : $this->average('WNDDIR', $records);
                     $wd->original_data_id = $owd->id;
@@ -137,15 +137,15 @@ class WeatherDataController extends Controller
                     $wd->TIME =    $item["TIME"];
                     $wd->TEMP =    $item['TEMP'];
                     $wd->DEWP =    $item["DEWP"];
-                    $wd->STP =     $item["DEWP"];
-                    $wd->SLP =     $item["DEWP"];
-                    $wd->VISIB =   $item["DEWP"];
-                    $wd->WDSP =    $item["DEWP"];
-                    $wd->PRCP =    $item["DEWP"];
-                    $wd->SNDP =    $item["DEWP"];
+                    $wd->STP =     $item["STP"];
+                    $wd->SLP =     $item["SLP"];
+                    $wd->VISIB =   $item["VISIB"];
+                    $wd->WDSP =    $item["WDSP"];
+                    $wd->PRCP =    $item["PRCP"];
+                    $wd->SNDP =    $item["SNDP"];
                     $wd->FRSHTT =  $item["FRSHTT"];
-                    $wd->CLDC =    $item["DEWP"];
-                    $wd->WNDDIR =  $item["DEWP"];
+                    $wd->CLDC =    $item["CLDC"];
+                    $wd->WNDDIR =  $item["WNDDIR"];
                     $wd->save();
                 }
             });
@@ -181,15 +181,15 @@ class WeatherDataController extends Controller
         return count($records) ? $sum / count($records) : 0;
     }
 
-    private function mostFrequent(array $records) {
+    private function mostFrequent(string $key, array $records) {
         $map = [];
 
         foreach ($records as $record) {
             $record = (array) $record;
-            if (!array_key_exists($record['FRSHTT'], $map)) {
-                $map[$record['FRSHTT']] = 1;
+            if (!array_key_exists($record[$key], $map)) {
+                $map[$record[$key]] = 1;
             } else {
-                $map[$record['FRSHTT']] += 1;
+                $map[$record[$key]] += 1;
             }
         }
 
