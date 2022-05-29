@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('/weatherData', App\Http\Controllers\API\WeatherDataController::class);
 
-Route::get('/weatherData/{column}/{token}', 'App\Http\Controllers\API\WeatherDataController@getField');
+Route::get('/weatherData/{token}', 'App\Http\Controllers\API\WeatherDataController@getField');
+Route::apiResource('/weatherData', App\Http\Controllers\API\WeatherDataController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -196,7 +196,7 @@ class WeatherDataController extends Controller
         return array_search(max($map), $map);
     }
 
-    public function getField(Request $request, String $column, String $token) {
+    public function getField(Request $request, String $token) {
         $subscription = abonnement::query()
             ->select()
             ->where('token', '=', $token)
@@ -207,28 +207,59 @@ class WeatherDataController extends Controller
             return response()->json(['message' => 'unauthorized'], 401);
         }
 
-        // check if column exists
-        if (!array_key_exists($column, $this->fields)) {
-            return response()->json(['message' => 'column does not exists'], 500);
+        $date_start = $request->input('date_start');
+        $date_end = $request->input('date_end');
+
+        // check if both dates are set
+        if ((empty($date_start) && !empty($date_end)) || (empty($date_end) && !empty($date_start))) {
+            return response()->json(['message' => 'Both dates need to be specified.'], 500);
+        }
+
+        // check if both dates are valid
+        foreach ([$date_start, $date_end] as $date) {
+            if (!strtotime($date) && $date != "") {
+                return response()->json(['message' => 'Date is not valid: ' . $date], 500);
+            }
+        }
+
+        $columns = explode(",", $request->input('columns'));
+
+        $select_string = [
+            "weatherdata.STN as station_id",
+            "nearestlocations.name as location",
+            "countries.country",
+            "nearestlocations.longitude",
+            "nearestlocations.latitude",
+            "weatherdata.DATE as date",
+            "weatherdata.TIME as time",
+        ];
+
+        // check if columns are valid or specified
+        foreach ($columns as $column) {
+            if (!array_key_exists($column, $this->fields) && $column != "") {
+                return response()->json(['message' => 'column does not exists: ' . $column], 500);
+            } else if ($column != "") {
+                array_push($select_string, "weatherdata.{$this->fields[$column]} as {$column}");
+            } else {
+                // add all columns
+                foreach ($this->fields as $key => $field) {
+                    array_push($select_string, "weatherdata.{$field} as {$key}");
+                }
+            }
         }
 
         // retrieve associated data
-        $data = abonnement::query()
-            ->select([
-                "weatherdata.STN as station_id",
-                "nearestlocations.name as location",
-                "countries.country",
-                "nearestlocations.longitude",
-                "nearestlocations.latitude",
-                "weatherdata.{$this->fields[$column]} as {$column}",
-                "weatherdata.DATE as date",
-                "weatherdata.TIME as time",
-            ])
+        $query = abonnement::query()
+            ->select($select_string)
             ->join('abonnement_stations', 'abonnement_stations.abonnement_id', 'abonnements.abonnement_id')
             ->join('weatherdata', 'weatherdata.STN', 'abonnement_stations.station_id')
             ->join('nearestlocations', 'nearestlocations.station_id', 'abonnement_stations.station_id')
-            ->join('countries', 'countries.country_code', 'nearestlocations.country_code')
-            ->where([
+            ->join('countries', 'countries.country_code', 'nearestlocations.country_code');
+        
+        if ($date_start != "" && $date_end != "") {
+            $query = $query->whereBetween('weatherdata.DATE', [$date_start, $date_end]);
+        } else {
+            $query = $query->where([
                 ['weatherdata.id', '=', function ($query) {
                     $query->select('weatherdata.id')
                         ->from('weatherdata')
@@ -237,10 +268,14 @@ class WeatherDataController extends Controller
                         ->orderByDesc('weatherdata.TIME')
                         ->limit(1);
                 }],
-                ['abonnements.token', '=', $token]
-            ])
-            ->get();
+            ]);
+        }
 
+        $query = $query->where([
+            ['abonnements.token', '=', $token],
+        ]);
+        
+        $data = $query->get();
 
         return response()->json($data);
     }
