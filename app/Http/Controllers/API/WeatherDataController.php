@@ -20,7 +20,7 @@ class WeatherDataController extends Controller
 {
     private array $fields = [
         'temperature' => 'TEMP',
-        'dew-point_temperature' => 'DEWP',
+        'dew_point_temperature' => 'DEWP',
         'station_air_pressure' => 'STP',
         'sea_level_air_pressure' => 'SLP',
         'visibility' => 'VISIB',
@@ -255,7 +255,7 @@ class WeatherDataController extends Controller
             ->join('weatherdata', 'weatherdata.STN', 'abonnement_stations.station_id')
             ->join('nearestlocations', 'nearestlocations.station_id', 'abonnement_stations.station_id')
             ->join('countries', 'countries.country_code', 'nearestlocations.country_code');
-        
+
         if ($date_start != "" && $date_end != "") {
             $query = $query->whereBetween('weatherdata.DATE', [$date_start, $date_end]);
         } else {
@@ -274,7 +274,7 @@ class WeatherDataController extends Controller
         $query = $query->where([
             ['abonnements.token', '=', $token],
         ]);
-        
+
         $data = $query->get();
 
         return response()->json($data);
