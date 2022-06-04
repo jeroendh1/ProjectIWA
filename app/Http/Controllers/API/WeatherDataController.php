@@ -273,9 +273,33 @@ class WeatherDataController extends Controller
 
         $query = $query->where([
             ['abonnements.token', '=', $token],
-        ]);
+        ])->orderBy('weatherdata.DATE')
+            ->orderBy('weatherdata.TIME');
 
-        $data = $query->get();
+        $records = $query->get()->toArray();
+
+        $data = [];
+
+        foreach ($records as $record) {
+            $key = $record["station_id"];
+            if (!array_key_exists($key, $data)) {
+                $data[$key] = [
+                    "location" => $record["location"],
+                    "country" => $record["country"],
+                    "longitude" => $record["longitude"],
+                    "latitude" => $record["latitude"],
+                    "data" => []
+                ];
+            }
+            $temp = [
+                "date" => $record["date"],
+                "time" => $record["time"],
+            ];
+            foreach($columns as $column) {
+                $temp[$column] = $record[$column];
+            }
+            $data[$key]["data"][] = $temp;
+        }
 
         return response()->json($data);
     }
