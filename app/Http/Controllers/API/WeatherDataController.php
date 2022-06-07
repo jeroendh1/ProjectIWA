@@ -250,7 +250,9 @@ class WeatherDataController extends Controller
                 }
             } else {
                 // add all columns
+                $columns = [];
                 foreach ($this->fields as $key => $value) {
+                    $columns[] = $key;
                     if (is_array($value)) {
                         foreach ($value as $field_key) {
                             $select_string[$field_key] = "weatherdata.{$this->fields[$field_key]} as {$field_key}";
@@ -310,17 +312,22 @@ class WeatherDataController extends Controller
                 "time" => $record["time"],
             ];
             foreach($columns as $column) {
-                if (array_key_exists($column, $record)) {
-                    $temp[$column] = $record[$column];
-                } else {
-                    if ($column == "humidity") {
+                $temp[$column] = match ($column) {
+                    "frost" => substr($record[$column], 0, 1) == 1,
+                    "rain" => substr($record[$column], 1, 1) == 1,
+                    "snow" => substr($record[$column], 2, 1) == 1,
+                    "hail" => substr($record[$column], 3, 1) == 1,
+                    "storm" => substr($record[$column], 4, 1) == 1,
+                    "tornado" => substr($record[$column], 5, 1) == 1,
+                    "humidity" => call_user_func(function() use ($record) {
                         $ta = $record["temperature"];
                         $td = $record["dew_point_temperature"];
                         $ptd = 6.112 * exp(17.62 * $td / (243.12 + $td));
                         $pta = 6.112 * exp(17.62 * $ta / (243.12 + $ta));
-                        $temp[$column] = 100 * round($ptd / $pta, 2);
-                    }
-                }
+                        return 100 * round($ptd / $pta, 2);
+                    }),
+                    default => $record[$column],
+                };
             }
             $data[$key]["data"][] = $temp;
         }
