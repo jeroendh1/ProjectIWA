@@ -35,6 +35,7 @@ class WeatherDataController extends Controller
         'tornado' => 'FRSHTT',
         'cloud_cover' => 'CLDC',
         'wind_direction' => 'WNDDIR',
+        'humidity' => ['dew_point_temperature', 'temperature'],
     ];
 
     /**
@@ -181,11 +182,12 @@ class WeatherDataController extends Controller
         return count($records) ? $sum / count($records) : 0;
     }
 
-    private function mostFrequent(string $key, array $records) {
+    private function mostFrequent(string $key, array $records)
+    {
         $map = [];
 
         foreach ($records as $record) {
-            $record = (array) $record;
+            $record = (array)$record;
             if (!array_key_exists($record[$key], $map)) {
                 $map[$record[$key]] = 1;
             } else {
@@ -239,11 +241,23 @@ class WeatherDataController extends Controller
             if (!array_key_exists($column, $this->fields) && $column != "") {
                 return response()->json(['message' => 'column does not exists: ' . $column], 500);
             } else if ($column != "") {
-                array_push($select_string, "weatherdata.{$this->fields[$column]} as {$column}");
+                if (is_array($this->fields[$column])) {
+                    foreach ($this->fields[$column] as $field_key) {
+                        $select_string[$field_key] = "weatherdata.{$this->fields[$field_key]} as {$field_key}";
+                    }
+                } else {
+                    $select_string[$column] = "weatherdata.{$this->fields[$column]} as {$column}";
+                }
             } else {
                 // add all columns
-                foreach ($this->fields as $key => $field) {
-                    array_push($select_string, "weatherdata.{$field} as {$key}");
+                foreach ($this->fields as $key => $value) {
+                    if (is_array($value)) {
+                        foreach ($value as $field_key) {
+                            $select_string[$field_key] = "weatherdata.{$this->fields[$field_key]} as {$field_key}";
+                        }
+                    } else {
+                        $select_string[$key] = "weatherdata.{$value} as {$key}";
+                    }
                 }
             }
         }
@@ -296,7 +310,17 @@ class WeatherDataController extends Controller
                 "time" => $record["time"],
             ];
             foreach($columns as $column) {
-                $temp[$column] = $record[$column];
+                if (array_key_exists($column, $record)) {
+                    $temp[$column] = $record[$column];
+                } else {
+                    if ($column == "humidity") {
+                        $ta = $record["temperature"];
+                        $td = $record["dew_point_temperature"];
+                        $ptd = 6.112 * exp(17.62 * $td / (243.12 + $td));
+                        $pta = 6.112 * exp(17.62 * $ta / (243.12 + $ta));
+                        $temp[$column] = round($ptd / $pta, 2);
+                    }
+                }
             }
             $data[$key]["data"][] = $temp;
         }
