@@ -324,7 +324,7 @@ class WeatherDataController extends Controller
                         $td = $record["dew_point_temperature"];
                         $ptd = 6.112 * exp(17.62 * $td / (243.12 + $td));
                         $pta = 6.112 * exp(17.62 * $ta / (243.12 + $ta));
-                        return 100 * round($ptd / $pta, 2);
+                        return round(100 * $ptd / $pta);
                     }),
                     default => $record[$column],
                 };
